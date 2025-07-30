@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "governance"
+  title: "Governance Watch"
   navbar:
     right:
       - about.qmd
