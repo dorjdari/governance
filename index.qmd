@@ -1,5 +1,6 @@
 ---
 title: "Governance Watch"
+title-block: none
 listing:
   contents: posts
   sort: "date desc"
