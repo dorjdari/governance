@@ -1,0 +1,227 @@
+---
+title: "Сонгууль ба төлөөлөл"
+format: 
+  html:
+    echo: false
+    warning: false
+    fig-cap-location: top
+    toc: true
+crossref:
+  fig-title: "Зураг"
+  fig-prefix: "Зураг"
+---
+
+```{r libraries}
+library(tidyverse)
+library(readxl)
+library(pdftools)
+library(janitor)
+library(scales)
+library(labelled)
+
+```
+
+```{r data read}
+data_1 <- read_excel("C:/Users/Dorjdari Namkhaijant/OneDrive - Natural Resource Governance Institute/All Work/Data/Elections/elections_summary.xlsx",
+                     sheet="sheet_1") %>% 
+mutate(across(where(is.character), ~ gsub("\r\n", " ",.))) %>% 
+  slice(-1) %>% 
+  clean_names() %>% 
+  rename("id"=1,
+         "col_2"=2,
+         "col_3"=3) %>% 
+  fill(id, .direction = "down") %>% 
+  group_by(id) %>% 
+  fill(col_2,.direction = "down") %>% 
+  ungroup() %>% 
+  mutate(indicator=paste(col_2,col_3," "),
+         .before=2) %>% 
+  select(-col_2,-col_3) %>% 
+  mutate(across(where(is.character), ~ gsub("NA", "",.))) %>% 
+  
+rename_with(
+    .fn = ~ str_extract(., "\\d{4}"),  # Extract 4-digit year
+    .cols = matches("^x\\d{4}_ony$")
+  ) %>% 
+
+rowwise() %>%
+  mutate(across(
+    .cols = matches("^\\d{4}$"),  # Automatically selects columns with 4-digit names
+    .fns = ~ if (str_detect(indicator, "хувь")) {
+      str_replace_all(.x, ",", ".")
+    } else {
+      str_remove_all(.x, ",")
+    }
+  )) %>%
+  ungroup()
+
+
+data_2 <- data_1 %>% 
+  filter(id==10) %>% 
+pivot_longer(cols = matches("^\\d{4}$"), names_to = "year", values_to = "value") %>%
+  separate_rows(value, sep = "нам") %>% 
+  mutate(value=str_remove(value," эвсэл")) %>% 
+mutate(
+    indicator = case_when(
+      row_number()%%2==1 ~ "Сонгуульд оролцсон нам",
+      TRUE ~ "Сонгуульд оролцсон эвсэл"
+    ),
+    value = parse_number(value)
+  ) %>% 
+  select(-id) %>% 
+  mutate(value=as.character(value)) %>% 
+  pivot_wider(names_from=year,values_from=value) %>% 
+  mutate(id=10,.before = 1)
+
+data_3 <- 
+  data_1 %>% 
+  filter(id==14) %>% 
+  pivot_longer(-c(id,indicator)) %>% 
+    separate(value,into = c("value","unit")," ") %>% 
+    mutate(value=as.numeric(value)) %>% 
+    mutate(value=ifelse(unit=="сая",value*1e+06,value*1e+09)) %>% 
+    select(-unit) %>%
+    mutate(value=as.character(value)) %>% 
+    pivot_wider(names_from = name,values_from = value) 
+  
+
+data <- bind_rows(
+  data_1 %>% 
+  filter(!id%in%c(10,14)), 
+  # %>% 
+  #  mutate(across(
+  #    .cols = matches("^\\d{4}$"),
+  #    .fns = ~ as.numeric(.))) %>% View(),
+      data_2,
+  data_3) %>% 
+  arrange(id) %>% 
+  mutate("2024"=c(3493629,2277229,2089939,1448300,100*1448300/2089939,1455188,1455188/1553627,(100-1455188/1553627)*1553627,100-1455188/155362,13,NA,2198,19,2,1341,1299,42,NA,NA,NA)) %>% 
+  mutate(`2024`=as.character(`2024`))
+
+data_0 <- data %>% 
+  set_variable_labels(
+    indicator="Various election labels"
+  )
+
+```
+
+
+## Асуудал
+
+2024 оны УИХ-ын сонгуулиар 76 байсан мандатын тоог 126 болгон өөрчилсөн нь хэд хэдэн шалтгаантай гэж мэдэгдэж байв. Тухайлбал, цөөн гишүүнтэй байх нь эрх мэдлийн төвлөрлийг нэмэгдүүлж, хууль тогтоомж батлах босго нам болж буй. Түүнчлэн хүн ам өсөхийн хэрээр нэг гишүүний төлөөлөх иргэдийн тоо үлэмж нэмэгдэж байгаа зэрэг үндэслэлийг дурдаж байв. 
+
+
+```{r}
+data_represent <- data %>% 
+  filter(id %in% c(1,11)) %>% 
+  pivot_longer(-c(id,indicator)) %>% 
+  select(-id) %>% 
+  pivot_wider(names_from = indicator,values_from = value) %>% 
+  rename(population=2,
+         candidates=3) %>% 
+  mutate(across(c(population, candidates),
+                as.numeric)) %>%
+  mutate(mandates=ifelse(name==2024,126,76)) %>% 
+  mutate(ratio_pop_candidates=population/candidates,
+         ratio_pop_mandates=population/mandates) %>% 
+  select(year=name,starts_with("ratio_")) %>% 
+  pivot_longer(-year)
+```
+
+Тэгвэл нэр дэвшигч, сонгуульд ялагсдын тоо хүн амын тоотой хэрхэн уялдаж байгааг сонирхож үзвэл иргэдийн сонголт хийх боломж болон улс төрчдийн авах шаардлагатай саналын талаарх дүр төрхийг харуулах юм. 
+
+## Хүн ам, нэр дэвшигчид, мандат
+
+1992 онд Монгол Улсын нийт хүн амын тоо `r data %>% filter(id==1) %>% pull("1992") %>% as.numeric() %>% comma(scale=1/1e6,accuracy=.01)` сая байсан бол 2024 он гэхэд даруй `r data %>% filter(id==1) %>% pull("2024") %>% as.numeric() %>% comma(scale=1/1e6,accuracy=.01)` сая болж өсжээ. Дөрвөн жилд нэг удаа болдог УИХ-ын сонгуульд нэр дэвшигчдийн тоо ч сонгуулиас сонгуульд нэмэгдэж, 1992 онд `r data %>% filter(id==11) %>% pull("1992")` байсан бол 2024 онд `r data %>% filter(id==11) %>% pull("2024")` болжээ.    
+
+Анх 1992 онд 76 гишүүнийг сонгоход нэг гишүүн дунджаар `r data_represent %>% filter(year=="1992",name=="ratio_pop_mandates") %>% pull(value) %>% comma(accuracy=1)` иргэнийг төлөөлж байв. Харин 2020 онд уг тоо `r data_represent %>% filter(year=="2020",name=="ratio_pop_mandates") %>% pull(value) %>% comma(accuracy=1)` болж нэмэгдсэн байв.
+
+
+```{r}
+gr_1 <- 
+  data_represent %>% 
+  ggplot(aes(x=as.factor(year)))+
+  geom_col(aes(y=value,
+               fill=name),
+           alpha=.8,
+           show.legend = FALSE)+
+  facet_wrap(~name,
+             scales="free_y",
+             labeller=as_labeller(c("ratio_pop_candidates"="Нэг нэр дэвшигчид ногдох",
+                                    "ratio_pop_mandates"="Нэг суудалд ногдох"))
+             )+
+  labs(y="Хүн амын тоо",
+       x=NULL,
+       caption="Эх сурвалж: Сонгуулийн ерөнхий хороо болон Ikon.mn вэб сайт",
+       #title="УИХ-ын сонгуульд нэр дэвшигч, мандатын тоо болон\nхүн амын тоон уялдаа"
+       )+
+  scale_y_continuous(expand=expansion(mult=c(0,0.05)),
+                     labels = label_comma()
+                     )+
+  scale_fill_manual(values=c("#557189","#F36F4F"))+
+  theme_bw()+
+  theme(panel.grid = element_blank(),
+        strip.background = element_blank(),
+        strip.text = element_text(size=12),
+        plot.caption = element_text(hjust=.5,
+                                    face="italic"),
+        axis.text.y = element_text(angle=90,hjust = .5),
+        plot.title = element_text(size=14,face="bold",hjust=.5)
+        )
+
+ggsave("gr_1.png",gr_1)
+```
+
+Дээрх байдлыг @fig-represent\-д дүрслэв.
+
+```{r}
+#| label: fig-represent
+#| fig-cap: "УИХ-ын сонгуульд нэр дэвшигч, мандатын тоо болон хүн амын тоон уялдаа"
+
+gr_1
+```
+
+## Цаашдын төлөв
+
+Дээрх хүснэгтээс хүн ам ирээдүйд өсөхөд хэдэн нэр дэвшигч, хэдэн ялагчийг тодруулах шаардлага үүсэхийг төсөөлөх боломжтой. 
+
+Нэг нэр дэвшигчид хэдэн төгрөгийн төсөв ногдох вэ? 
+
+```{r}
+pop_1 <- read_excel("C:/Users/Dorjdari Namkhaijant/OneDrive - Natural Resource Governance Institute/All Work/Data/Elections/elections_summary.xlsx",
+                     sheet="population")
+
+growth_1 <- pop_1 %>% 
+  head(1) %>% 
+  select(-c(1,3)) %>% 
+  pivot_longer(-1,names_to = "year") %>% 
+  rename("aimag"=1) %>% 
+  mutate(year=as.numeric(year)) %>% 
+  filter(year>1989) %>% 
+  mutate(growth=100*(value-lag(value))/lag(value)) %>% 
+  select(-aimag)
+
+growth_ave <- growth_1 %>% 
+  summarize(average=mean(growth,na.rm=TRUE)) %>% 
+  pull()
+
+pop_24 <- growth_1 %>% 
+  filter(year==2024) %>% pull(value)
+
+growth_1
+
+pop_fore <- rep(1,16)
+
+
+set.seed=1
+growth_fore <- tibble(year=seq(2025,2040,by=1),
+       growth=rnorm(16,mean=growth_ave,sd=.5)) %>% 
+  mutate(pop=(1+growth/100)^row_number())
+growth_fore
+```
+
+## Дүгнэлт
+
+
+![](images/my_blog_logo.png)
+
