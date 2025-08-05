@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "alpha2zero",
+    "section": "",
+    "text": "## Intro 0\nThis is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "alpha2zero",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html#intro",
+    "href": "index.html#intro",
+    "title": "alpha2zero",
+    "section": "Intro",
+    "text": "Intro"
+  },
+  {
+    "objectID": "index.html#intro-0",
+    "href": "index.html#intro-0",
+    "title": "alpha2zero",
+    "section": "Intro 0",
+    "text": "Intro 0\nThis is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html#улсын-төсөв-санхүү",
+    "href": "index.html#улсын-төсөв-санхүү",
+    "title": "alpha2zero",
+    "section": "Улсын төсөв санхүү",
+    "text": "Улсын төсөв санхүү\nThis is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html#уул-уурхай",
+    "href": "index.html#уул-уурхай",
+    "title": "alpha2zero",
+    "section": "Уул уурхай",
+    "text": "Уул уурхай"
+  },
+  {
+    "objectID": "index.html#эрчим-хүч",
+    "href": "index.html#эрчим-хүч",
+    "title": "alpha2zero",
+    "section": "Эрчим хүч",
+    "text": "Эрчим хүч"
+  }
+]

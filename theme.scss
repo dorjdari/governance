@@ -1,0 +1,19 @@
+
+/*-- scss:defaults --*/
+
+
+/*-- scss:rules --*/
+
+.navbar-brand {
+  display: none !important;
+  background-color: #557189 !important; 
+}
+
+.my-image {
+  height: 150px;   // keeps aspect ratio  
+  width: auto;     // or 300px
+  margin-top: -2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
