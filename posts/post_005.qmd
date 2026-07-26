@@ -4,6 +4,7 @@ description: "Ажлынхаа хүрээнд хийсэн судалгааны 
 date: 2025-04-21
 image: "pics/gogo_cu_expansion.jpeg"
 categories: [Мэдээ, Эрдэнэт, УИХ]
+theme: [default, theme-blogs_ind.scss]
 ---
 
 ![Зургийн эх сурвалж: gogo.mn-ий авсан зураг](pics/gogo_cu_expansion.jpeg){#image-report_cu}

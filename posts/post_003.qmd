@@ -10,4 +10,4 @@ categories: [Мэдээ, Гэрээ, Оюутолгой, УИХ]
 
 Оюу Толгойтой хүүг бууруулах талаар зарчмын хувьд тохирсон гэнэ.  
 
-![](pics/25_10_30_ot_renegotiation_mn_team.jpg){width=30% fig-align="center"}
+[![](pics/25_10_30_ot_renegotiation_mn_team.jpg){width=30% fig-align="center"}](finance.qmd)
