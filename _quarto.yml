@@ -28,11 +28,12 @@ format:
   html:
     toc: true
     date-format: "YYYY-MM-DD"
-    
+
 language:
   title-block-published: "Нийтлэгдсэн"
   title-block-author-single: "Зохиогч"
   title-block-author-plural: "Зохиогчид"
   title-block-category: "Ангилал"
   listing-page-category-all: "Бүгд"
+  toc-title-website: "Энэ хэсэгт"
   
