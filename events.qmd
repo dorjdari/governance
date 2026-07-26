@@ -1,0 +1,23 @@
+---
+title: "Үйл явдал"
+listing: 
+  type: default
+  contents: posts
+  sort: "date desc"
+  categories: true
+  fields: 
+    - title
+    - date
+    - image
+    - categories
+    - tags
+    - description
+  sort-ui: true
+  image-height: 200px
+  filter-ui: true
+page-layout: full
+theme: 
+  - default
+  - theme-blogs.scss
+---
+

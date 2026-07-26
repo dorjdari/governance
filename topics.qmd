@@ -1,0 +1,29 @@
+---
+title: ""
+format: 
+  html:
+    theme: 
+      - default
+      - theme-sectors.scss
+---
+
+![](images/logo_new_2.png){.image-logo}
+
+
+::: {layout="[[1,1], [1,1]]"}
+
+[![Нийтийн санхүү](images/pic_finance.png)](top_finance.qmd)
+
+[![Уул уурхайн засаглал](images/pic_mining.png)](top_mining.qmd)
+
+[![Авлигын эсрэг тэмцэл](images/pic_anticorruption.png)](top_anticorruption.qmd)
+
+[![Өгөгдлийн шинжилгээ](images/pic_data.png)](top_data.qmd)
+
+
+:::
+
+
+
+
+

@@ -1,0 +1,44 @@
+
+/*-- scss:defaults --*/
+
+
+/*-- scss:rules --*/
+
+.quarto-listing .quarto-listing-container div.quarto-post {
+  align-items: flex-start; // or center
+}
+
+.quarto-listing .listing-date,
+.quarto-listing .listing-categories {
+  min-height: 3em; // reserve consistent space
+}
+
+.quarto-title-meta-heading {
+  
+}
+
+.metadata-value.listing-tags {
+  white-space: normal;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+}
+
+//Categories title-g mongol bolgoh 
+
+.quarto-listing-category-title {
+  color: transparent;
+  position: relative;
+}
+
+.quarto-listing-category-title::after {
+  content: "Ангилал";
+  color: #333;   // or inherit
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.image-ubn {
+  width: 50%;
+  height: auto;
+}

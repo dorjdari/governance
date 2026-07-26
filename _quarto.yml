@@ -1,26 +1,38 @@
 project:
   type: website
+  output-dir: "docs"
 
 website:
-  title: "alpha2zero"
   navbar:
-    left:
+    title: Alpha → Zero
+    right:
       - href: index.qmd
         text: Нүүр
-      - href: sectors.qmd
-        text: Салбар
-      - href: issues.qmd
+      - href: topics.qmd
         text: Сэдэв
+      - href: events.qmd
+        text: Үйл явдал
       - href: about.qmd
         text: Тухай
-      
+  sidebar:
+    - id: get-started
+      title: "Get started"
+      logo: images/logo_new_1.png
+      style: "docked"
+      align: left
+      contents:
+        - text: Editor basics
+          href: docs/about
 
 format:
   html:
-    theme: 
-      - default
-      - theme.scss
     toc: true
-
-
-
+    date-format: "YYYY-MM-DD"
+    
+language:
+  title-block-published: "Нийтлэгдсэн"
+  title-block-author-single: "Зохиогч"
+  title-block-author-plural: "Зохиогчид"
+  title-block-category: "Ангилал"
+  listing-page-category-all: "Бүгд"
+  

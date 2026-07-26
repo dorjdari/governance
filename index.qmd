@@ -2,23 +2,37 @@
 title: ""
 format: 
   html:
-    toc: true
-    toc-title: "Энэ хэсэгт:"
+    theme: 
+      - default
+      - theme.scss
+    toc: false
+    warning: false
+    echo: false
 ---
 
-![](images/logo.png){.my-image} 
+![](images/logo_new_1.png){.image-logo} 
 
-## Улсын төсөв санхүү
+### Сайн байна уу?
 
-This is a Quarto website.
+Монгол Улсын төр засгийн үйл ажиллагааг ажиглах явцад цугларсан мэдээ мэдээллийг цэгцлэн хадгалж, олон нийттэй хуваалцах зорилгоор энэхүү вэбсайтыг хөтлөх болов. Олон нийтэд ил болсон, үүнд вэбсайт, нийгмийн сүлжээ зэрэгт хэвлэгдсэн мэдээллийг эх сурвалж болгон ашиглах юм. Төсөв санхүү, уул уурхайн бодлого, засаглалын асуудлаар түлхүү бичихээс гадна өгөдлийн дүн шинжилгээний талаар хүмүүст санаа өгөх, мэдлэгээ дээшлүүлээд нь туслах зорилгыг давхар агуулав.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Уншигч таны санал, шүүмж, хэлэлцүүлгийг үргэлж талархан хүлээн авах болно.
 
-```{r}
-1 + 1
-```
+### Танд амжилт хүсье!
 
-## Уул уурхай
+::: {.grid .gap-4 .pb-3 .pt-4}
 
-## Эрчим хүч
+::: {.g-col-sm-2}
+:::
+
+::: {.g-col-12 .g-col-sm-4}
+[Онцлох сэдэв](/topics.qmd){.btn-secondary .btn-action .btn .btn-lg .w-100 role="button"}
+:::
+
+::: {.g-col-12 .g-col-sm-4 .mb-2}
+[Блог](/events.qmd){#btn-events .btn-action .btn-secondary .btn .btn-lg .w-100 role="button"}
+::: 
+
+::: 
+
 
