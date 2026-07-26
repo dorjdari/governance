@@ -2,6 +2,7 @@
 title: "Өгөгдлийн шинжилгээ"
 format: 
   html: 
+    theme: [default, theme-sectors.scss]
     warning: false
     echo: false
 ---
