@@ -14,15 +14,6 @@ website:
         text: Үйл явдал
       - href: about.qmd
         text: Тухай
-  sidebar:
-    - id: get-started
-      title: "Get started"
-      logo: images/logo_new_1.png
-      style: "docked"
-      align: left
-      contents:
-        - text: Editor basics
-          href: docs/about
 
 format:
   html:
