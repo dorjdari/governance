@@ -18,9 +18,9 @@ format:
 
 [![Авлигын эсрэг тэмцэл](images/pic_anticorruption.png)](top_anticorruption.qmd)
 
-[![Төрийн өмчит компани](images/pic_soes.png)](top_data.qmd)
+[![Төрийн өмчит компани](images/pic_soes.png)](top_mining.qmd)
 
-[![Эрчим хүчний шилжилт](images/pic_energy_transition.png)](top_data.qmd)
+[![Эрчим хүчний шилжилт](images/pic_energy_transition.png)](top_mining.qmd)
 
 [![Өгөгдлийн шинжилгээ](images/pic_data.png)](top_data.qmd)
 
