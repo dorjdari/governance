@@ -1,0 +1,9 @@
+---
+title: "Эрчим хүчний шилжилт"
+format: 
+  html:
+    warning: false
+    echo: false
+---
+
+## Удахгүй шинэчлэгдэнэ!

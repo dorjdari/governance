@@ -1,0 +1,11 @@
+---
+---
+title: "Төрийн өмчит компани"
+format: 
+  html:
+    warning: false
+    echo: false
+---
+
+## Удахгүй шинэчлэгдэнэ!
+
