@@ -1,6 +1,163 @@
 ---
 title: "top_finance"
-format: html
+format: 
+  html:
+    warning: false
+    echo: false
 ---
 
-coming soon
+## Монгол Улсын эдийн засгийн гол үзүүлэлтүүд
+
+```{r}
+library(readxl)
+library(tidyverse)
+library(fs)
+library(ggiraph)
+
+```
+
+
+```{r}
+#rds files are based on "data/data_topics/gdp_data.xlsx",skip = 1)
+
+df <- read_excel(
+  "data/data_topics/gdp_data.xlsx",
+  skip = 1
+) %>%
+  rename(
+    item = 1,
+    sector = 2
+  )
+
+# Indicator dictionary
+item_dict <- c(
+  "ДНБ, оны үнээр" = "gdp_current",
+  "ДНБ, 2005 оны зэрэгцүүлэх үнээр" = "gdp_constant2005",
+  "ДНБ, 2010 оны зэрэгцүүлэх үнээр" = "gdp_constant2010",
+  "ДНБ, 2015 оны зэрэгцүүлэх үнээр" = "gdp_constant2015",
+  "Цэвэр өсөлт, бууралт, хувиар" = "growth_rate",
+  "ДНБ-ий өөрчлөлтөд салбаруудын оролцоо, нэгж хувиар" = "growth_contribution",
+  "ДНБ, оны үнээр, мянган америк доллар" = "gdp_current_usd"
+)
+
+# Sector dictionary
+sector_dict <- c(
+  "Бүгд" = "total",
+  "Хөдөө аж ахуй, ойн аж ахуй, загас барилт, ан агнуур" = "agriculture",
+  "Уул уурхай, олборлолт" = "mining",
+  "Боловсруулах үйлдвэрлэл" = "manufacturing",
+  "Цахилгаан, хий, уур, агааржуулалт" = "utilities",
+  "Усан хангамж; бохир ус, хог, хаягдлын менежмент болон цэвэрлэх үйл ажиллагаа" = "water_waste",
+  "Барилга" = "construction",
+  "Бөөний болон жижиглэн худалдаа, машин, мотоциклийн засвар, үйлчилгээ" = "trade",
+  "Тээвэр ба агуулахын үйл ажиллагаа" = "transport",
+  "Зочид буудал, байр, сууц болон нийтийн хоолны үйлчилгээ" = "hospitality",
+  "Мэдээлэл, холбоо" = "information",
+  "Санхүүгийн болон даатгалын үйл ажиллагаа" = "finance",
+  "Үл хөдлөх хөрөнгийн үйл ажиллагаа" = "real_estate",
+  "Мэргэжлийн, шинжлэх ухаан болон техникийн үйл ажиллагаа" = "professional",
+  "Удирдлагын болон дэмжлэг үзүүлэх үйл ажиллагаа" = "administrative",
+  "Төрийн удирдлага ба батлан хамгаалах үйл ажиллагаа, албан журмын нийгмийн хамгаалал" = "public_admin",
+  "Боловсрол" = "education",
+  "Хүний эрүүл мэнд ба нийгмийн үйл ажиллагаа" = "health",
+  "Урлаг, үзвэр, тоглоом, наадам" = "arts",
+  "Үйлчилгээний бусад үйл ажиллагаа" = "other_services",
+  "Бүтээгдэхүүний цэвэр татвар" = "net_taxes"
+)
+
+# Create one RDS file per indicator-sector combination
+for (i in seq_len(nrow(df))) {
+
+  indicator <- item_dict[df$item[i]]
+  sector <- sector_dict[df$sector[i]]
+
+  if (is.na(indicator))
+    stop("Unknown indicator: ", df$item[i])
+
+  if (is.na(sector))
+    stop("Unknown sector: ", df$sector[i])
+
+  out <- tibble(
+    indicator = indicator,
+    sector = sector,
+    year = as.integer(names(df)[3:ncol(df)]),
+    value = as.numeric(unlist(df[i, 3:ncol(df)]))
+  )
+
+  saveRDS(
+    out,
+    file.path(
+      "data/data_topics",
+      paste0(indicator, "_", sector, ".rds")
+    )
+  )
+}
+
+```
+
+```{r}
+growth_rate <- readRDS("data/data_topics/growth_rate_total.RDS")
+
+```
+
+
+```{r}
+p <- growth_rate %>% 
+  ggplot(
+    aes(
+    x = year,
+    y = value
+  )
+) +
+  geom_col_interactive(
+    aes(
+      tooltip = paste0(
+        "Өсөлт:<br>", sprintf("%.1f%%", value)
+      ),
+      data_id = year
+    ),
+    fill = "#005BAA"
+  ) +
+  labs(
+    x = NULL,
+    y = "Хувь"
+  ) +
+  scale_y_continuous(breaks=seq(-10,20,by=4))+
+  scale_x_continuous(breaks=seq(1990,2025,by=5))+
+  theme_minimal(base_size = 14)+
+  theme(panel.grid.minor = element_blank())
+
+girafe(
+    ggobj = p,
+    width_svg = 8,
+    height_svg = 5,
+    options = list(
+
+      opts_toolbar(
+        saveaspng = TRUE
+      ),
+
+      opts_zoom(
+        max = 5
+      ),
+
+      opts_hover(css = "
+        fill:#F36F4F;
+        stroke-width:2;
+        cursor:pointer;
+        r:5pt;
+      "),
+
+      opts_tooltip(css = "
+        background:white;
+        color:black;
+        border:1px solid #999;
+        border-radius:5px;
+        padding:8px;
+        box-shadow:2px 2px 8px rgba(0,0,0,.25);
+      ")
+    )
+  )
+
+```
+
