@@ -1,5 +1,0 @@
----
-title: "wgrowth_2"
-format: html
----
-
