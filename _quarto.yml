@@ -14,6 +14,7 @@ website:
         text: Үйл явдал
       - href: about.qmd
         text: Тухай
+  google-analytics: G-7Y3C1KYLKS
 
 format:
   html:
