@@ -4,7 +4,10 @@ project:
 
 website:
   navbar:
-    title: Alpha → Zero
+    title: |
+      <span class="logo-alpha">Alpha</span>
+      <span class="logo-arrow">→</span>
+      <span class="logo-zero">Zero</span>
     right:
       - href: index.qmd
         text: Нүүр
