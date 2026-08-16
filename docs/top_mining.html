@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -92,7 +127,7 @@ gtag('config', 'G-7Y3C1KYLKS', { 'anonymize_ip': true});
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Alpha → Zero</span>
+    <span class="navbar-title"><span class="logo-alpha">Alpha</span> <span class="logo-arrow">→</span> <span class="logo-zero">Zero</span></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -154,6 +189,940 @@ gtag('config', 'G-7Y3C1KYLKS', { 'anonymize_ip': true});
 
 
 <p>coming soon</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.1     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mining_timeline <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>year, <span class="sc">~</span>category, <span class="sc">~</span>event, <span class="sc">~</span>actors, <span class="sc">~</span>commodity, <span class="sc">~</span>significance,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1990s — Зах зээлийн шилжилт ба эрх зүйн суурь</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1990</span>, <span class="st">"political_economy"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зах зээлийн эдийн засагт шилжиж, уул уурхайн салбарын шинэ эрх зүйн орчин бүрэлдэж эхлэв"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монгол Улсын Засгийн газар; УИХ"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн салбарт төрийн шууд эзэмшил давамгайлсан тогтолцооноос хөрөнгө оруулалт, лицензэд суурилсан тогтолцоо руу шилжих эхлэл"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1994</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ашигт малтмалын тухай хууль батлагдав"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зах зээлийн үеийн ашигт малтмалын эрх зүйн анхны суурь"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1997</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ашигт малтмалын тухай шинэ хууль батлагдав"</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Хайгуул, ашиглалтын лицензийн тогтолцоог илүү тодорхой болгож, хувийн хөрөнгө оруулалтын орчныг бүрдүүлэв"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1997</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гадаадын хөрөнгө оруулалт уул уурхайн салбарт эрчимжиж эхлэв"</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гадаадын хөрөнгө оруулагчид; Монголын компаниуд"</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gold; copper; coal"</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Алт болон нүүрсний хайгуул, олборлолтын хувийн хэвшлийн оролцоо нэмэгдэв"</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2000–2005 — Том орд ба гадаадын хөрөнгө оруулалт</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2000</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн ордын хайгуул эрчимжиж, Ivanhoe Mines гол хөрөнгө оруулагч болов"</span>,</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ivanhoe Mines; Монголын Засгийн газар"</span>,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгой Монголын уул уурхайн хамгийн том ирээдүйн хөрөнгө оруулалтын төсөл болон хөгжих эхлэл"</span>,</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2001</span>, <span class="st">"discovery"</span>,</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн зэс-алтны ордын томоохон нөөцийн ач холбогдол тодорхой болов"</span>,</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ivanhoe Mines"</span>,</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын уул уурхайн салбарт олон улсын хэмжээний зэсийн төслийн суурь тавигдав"</span>,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2002</span>, <span class="st">"company"</span>,</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэт үйлдвэрийн төрийн оролцоотой бүтэц Монголын уул уурхайн эдийн засгийн гол тулгуур хэвээр байв"</span>,</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэт үйлдвэр; Монголын төр; ОХУ"</span>,</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; molybdenum"</span>,</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит уул уурхайн компанийн эдийн засагт эзлэх байр суурь хадгалагдав"</span>,</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2004</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгой ордоос анхны нүүрсний экспорт эхлэв"</span>,</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Тавантолгой ХК"</span>,</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгой нүүрсний экспортын томоохон төв болох эхлэл"</span>,</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2005</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн хайгуул, хөрөнгө оруулалтын ажил эрчимжив"</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ivanhoe Mines; Монголын Засгийн газар"</span>,</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төслийг ашиглалтад оруулах хэлэлцээрийн суурь бүрэлдэв"</span>,</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2006–2010 — Mining boom, Windfall tax, OT agreement</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2006</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ашигт малтмалын тухай хуулийн шинэчилсэн найруулга батлагдав"</span>,</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>,</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ордын лиценз, хайгуул, ашиглалт, төрийн оролцооны шинэ эрх зүйн тогтолцоо бий болов"</span>,</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2006</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Стратегийн ач холбогдол бүхий ордын төрийн оролцооны зохицуулалт бий болов"</span>,</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>,</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; coal; gold"</span>,</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төр стратегийн ордод эзэмшил/оролцоотой байх эрх зүйн үндэс бэхжив"</span>,</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2006</span>, <span class="st">"tax"</span>,</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зарим ашигт малтмалын өндөр үнийн үед нэмэлт татвар авах зохицуулалт бий болов"</span>,</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>,</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gold; copper"</span>,</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн үнийн өсөлтийн rent-ийг төр авах бодлого хүчтэй болов"</span>,</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2007</span>, <span class="st">"tax"</span>,</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гэнэтийн ашгийн татварын орчин бүрэлдэж, уул уурхайн татварын ачаалал нэмэгдэв"</span>,</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>,</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>  <span class="st">"gold; copper"</span>,</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн орлогыг төсөвт төвлөрүүлэх бодлого эрчимжив"</span>,</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2008</span>, <span class="st">"political_economy"</span>,</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн хөрөнгө оруулалтын гэрээний үндсэн зарчим, төрийн оролцооны асуудал парламентын түвшинд хэлэлцэгдэв"</span>,</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар; Ivanhoe Mines"</span>,</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн төрийн 34 хувийн эзэмшлийн үндсэн бүтэц бүрэлдэв"</span>,</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2009</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн Хөрөнгө оруулалтын гэрээ байгуулагдав"</span>,</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Ivanhoe Mines; Rio Tinto"</span>,</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын түүхэн дэх хамгийн том гадаадын хөрөнгө оруулалтын төслүүдийн нэг эхлэв"</span>,</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2009</span>, <span class="st">"company"</span>,</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Oyu Tolgoi LLC байгуулагдаж, Монголын төр 34 хувийг эзэмших бүтэц бүрэлдэв"</span>,</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Erdenes Oyu Tolgoi; Rio Tinto; Ivanhoe Mines"</span>,</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн оролцоотой томоохон хамтарсан уурхайн загвар бий болов"</span>,</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2010</span>, <span class="st">"company"</span>,</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой ХК байгуулагдав"</span>,</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар"</span>,</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгой ордыг төрийн өмчит компанийн бүтцээр хөгжүүлэх бодлого эхлэв"</span>,</span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2011–2015 — Mining boom, OT construction, TT restructuring</span></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2011</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн ил уурхайн бүтээн байгуулалт, олборлолт эхлэв"</span>,</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Oyu Tolgoi LLC; Rio Tinto"</span>,</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын уул уурхайн хамгийн том үйлдвэрлэлийн төслүүдийн нэг ашиглалтад орлоо"</span>,</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2011</span>, <span class="st">"export"</span>,</span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгой компани 6 сая тонн нүүрс экспортлов"</span>,</span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Тавантолгой ХК"</span>,</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын нүүрсний экспортын огцом өсөлтийн үеийг харуулав"</span>,</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2011</span>, <span class="st">"company"</span>,</span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto Оюу Толгойн төслийн гол оператор болсон"</span>,</span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto; Ivanhoe Mines"</span>,</span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Олон улсын уул уурхайн томоохон компанийн Монгол дахь оролцоо эрс нэмэгдэв"</span>,</span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2012</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Стратегийн ач холбогдол бүхий салбар дахь гадаадын хөрөнгө оруулалтыг хязгаарлах эрх зүйн зохицуулалт батлагдав"</span>,</span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>,</span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гадаадын төрийн өмчит болон стратегийн хөрөнгө оруулалтад хяналт тавих бодлого хүчтэй болов"</span>,</span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2012</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн II үе шатны хөрөнгө оруулалтын асуудал хурцдав"</span>,</span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Oyu Tolgoi LLC; Rio Tinto; Монголын Засгийн газар"</span>,</span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төслийн зардал, татвар, санхүүжилтийн маргааны эхлэл"</span>,</span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2013</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн өргөтгөлийн төлөвлөгөө баталгаажих шатанд орлоо"</span>,</span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto; Монголын Засгийн газар"</span>,</span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын уул уурхайн салбарын хамгийн том хөрөнгө оруулалтын дараагийн үе"</span>,</span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2013</span>, <span class="st">"company"</span>,</span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой Шинхуа болон бусад талуудтай урт хугацааны нүүрс экспортын хэлэлцээр хийв"</span>,</span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой; Shenhua; Energy Resources"</span>,</span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгойн экспорт, тээвэрлэлтийн бүтэц олон улсын компаниудтай холбогдов"</span>,</span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2014</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Хөрөнгө оруулалтын тухай шинэ хууль батлагдав"</span>,</span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>,</span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гадаад, дотоодын хөрөнгө оруулалтын эрх зүйн орчин шинэчлэгдэв"</span>,</span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2014</span>, <span class="st">"infrastructure"</span>,</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгойн нүүрсний экспортын дэд бүтцийн төслүүдэд төрийн оролцоо нэмэгдэв"</span>,</span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Таван Толгой компани"</span>,</span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний экспортын логистикийн зардлыг бууруулах оролдлого"</span>,</span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2015</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгойн стратегийн хөрөнгө оруулалтын хэлэлцээрийн шинэ хувилбарууд хэлэлцэгдэв"</span>,</span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Energy Resources; Shenhua; Sumitomo"</span>,</span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит Таван Толгойг олон улсын хөрөнгө оруулалттай хөгжүүлэх оролдлого"</span>,</span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2015</span>, <span class="st">"company"</span>,</span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн бүтээн байгуулалтын гэрээ, тендерийн багцууд эхлэв"</span>,</span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Oyu Tolgoi LLC; Rio Tinto; олон улсын болон Монголын компаниуд"</span>,</span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Далд уурхайн II үе шат бодит бүтээн байгуулалтын шатанд шилжив"</span>,</span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2016–2019 — State ownership, Erdenet, OT dispute</span></span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2016</span>, <span class="st">"company"</span>,</span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар Эрдэнэт үйлдвэрийн 49 хувийг Монголын талын хувийн компанид шилжүүлсэн хэлцлийг хийв"</span>,</span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Mongolian Copper Corporation; Засгийн газар; Эрдэнэт үйлдвэр"</span>,</span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; molybdenum"</span>,</span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит компанийн өмчлөлийн бүтэцтэй холбоотой томоохон улс төр, эрх зүйн маргаан"</span>,</span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2016</span>, <span class="st">"case"</span>,</span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэт үйлдвэрийн 49 хувийн худалдан авалтын маргаан эхлэв"</span>,</span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын төр; Mongolian Copper Corporation; УИХ"</span>,</span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper"</span>,</span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмч, хувийн өмч, стратегийн үйлдвэрийн хяналтын асуудал улс төрийн гол сэдэв болов"</span>,</span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2017</span>, <span class="st">"tax"</span>,</span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн татварын маргаан болон татварын актын асуудал хурцдав"</span>,</span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Татварын байгууллага; Oyu Tolgoi LLC; Rio Tinto"</span>,</span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Том уул уурхайн төслийн татварын орлого, зардал, гэрээний тогтвортой байдлын маргаан"</span>,</span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2017</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Татварын хууль тогтоомж шинэчлэгдэв"</span>,</span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>,</span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн компанийн татварын орчинд өөрчлөлт орсон"</span>,</span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2018</span>, <span class="st">"energy"</span>,</span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойг дотоодын цахилгаанаар хангах Power Source Framework Agreement байгуулагдав"</span>,</span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Oyu Tolgoi LLC"</span>,</span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper"</span>,</span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн эрчим хүчний хангамжийг Монголын системтэй холбох стратегийн шийдэл"</span>,</span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2019</span>, <span class="st">"case"</span>,</span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн зардал, хугацаа, татварын асуудлаарх маргаан дахин хурцдав"</span>,</span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Rio Tinto; Turquoise Hill"</span>,</span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төслийн өртөг өсөлт, санхүүжилт, Монголын 34 хувийн эдийн засгийн өгөөжийн асуудал"</span>,</span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2019</span>, <span class="st">"policy"</span>,</span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн орлогыг ирээдүйд хуримтлуулах, баялгийн сангийн тухай хэлэлцүүлэг эрчимжив"</span>,</span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар; иргэний нийгэм"</span>,</span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн орлогыг тогтвортой удирдах бодлогын асуудал"</span>,</span>
+<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2020–2022 — Coal, OT reset, corruption cases</span></span>
+<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2020</span>, <span class="st">"energy"</span>,</span>
+<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгойн цахилгаан станцыг төрийн хөрөнгөөр барих шийдвэр гаргав"</span>,</span>
+<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Oyu Tolgoi LLC"</span>,</span>
+<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal; copper"</span>,</span>
+<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн дотоодын эрчим хүчний эх үүсвэрийн асуудал төрийн томоохон төсөл болов"</span>,</span>
+<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2020</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Коронавируст халдварын үеийн эдийн засгийн бодлого уул уурхайн экспортод хүчтэй нөлөөлөв"</span>,</span>
+<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; УИХ"</span>,</span>
+<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal; copper"</span>,</span>
+<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Хил, экспорт, төсвийн орлогын эрсдэлийг нэмэгдүүлэв"</span>,</span>
+<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2021</span>, <span class="st">"case"</span>,</span>
+<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний экспорт, төрийн өмчит компаниудын борлуулалттай холбоотой асуудлууд улс төрийн маргааны гол сэдэв болов"</span>,</span>
+<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой; төрийн байгууллагууд"</span>,</span>
+<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний худалдааны ил тод байдал, гэрээ, зуучлалын асуудал хүчтэй яригдав"</span>,</span>
+<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2021</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ Оюу Толгойн төслийн үр өгөөжийг нэмэгдүүлэх чиглэл бүхий 103 дугаар тогтоол батлав"</span>,</span>
+<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар; Rio Tinto"</span>,</span>
+<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Далд уурхайн санхүүжилт, Монголын талын өгөөжийн нөхцөлийг дахин хэлэлцэх улс төрийн суурь"</span>,</span>
+<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2022</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн олборлолтыг эхлүүлэх шинэ тохиролцоонд хүрэв"</span>,</span>
+<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Rio Tinto; Turquoise Hill"</span>,</span>
+<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto Монголын талын 2.4 тэрбум ам.долларын carry loan-ыг хүчингүй болгож, далд уурхайн төслийг урагшлуулав"</span>,</span>
+<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2022</span>, <span class="st">"company"</span>,</span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto Turquoise Hill Resources-ийн үлдсэн хувьцааг худалдан авч Оюу Толгойн бүрэн хяналтыг авлаа"</span>,</span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto; Turquoise Hill; Монголын төр"</span>,</span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн төслийн операторын өмчлөлийн бүтэц эцэслэв"</span>,</span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2022</span>, <span class="st">"case"</span>,</span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний хулгайн хэрэгтэй холбоотой мөрдөн шалгах ажиллагаа эхэлж, нүүрсний худалдааны гэрээ, борлуулалт, төрийн өмчит компанийн засаглал улс төрийн том асуудал болов"</span>,</span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой; төрийн байгууллагууд; улс төрийн албан тушаалтнууд"</span>,</span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн авлига, төрийн өмчит компанийн засаглал, экспортын гэрээний ил тод байдлын асуудлыг төвд авчрав"</span>,</span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2022</span>, <span class="st">"governance"</span>,</span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой компанийн засаглал, нүүрсний борлуулалтын ил тод байдлын шинэчлэл эрчимжив"</span>,</span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой; Засгийн газар"</span>,</span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит компанийн мэдээлэл, борлуулалтын хяналтыг сайжруулах оролдлого"</span>,</span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2023–2024 — Copper strategy, wealth fund, coal export</span></span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2023</span>, <span class="st">"production"</span>,</span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн анхны тогтвортой олборлолт эхлэх шатанд орлоо"</span>,</span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Oyu Tolgoi LLC; Rio Tinto"</span>,</span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын зэсийн үйлдвэрлэлд урт хугацааны өсөлтийн шинэ үе эхлэв"</span>,</span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2023</span>, <span class="st">"law"</span>,</span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Үндэсний баялгийн сангийн тухай хууль батлагдав"</span>,</span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>,</span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн баялгийн өгөөжийг иргэдэд хүртээх, хуримтлуулах шинэ институцийн тогтолцоо бий болов"</span>,</span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2023</span>, <span class="st">"governance"</span>,</span>
+<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит компаниудын хувьцааг олон нийтэд санал болгох, IPO хийх бодлого эрчимжив"</span>,</span>
+<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; Эрдэнэс Монгол"</span>,</span>
+<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal; copper"</span>,</span>
+<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит уул уурхайн компаниудын засаглал, өмчлөлийн бүтцийг өөрчлөх бодлого"</span>,</span>
+<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2023</span>, <span class="st">"export"</span>,</span>
+<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын нүүрсний экспорт түүхэн өндөр түвшинд хүрэв"</span>,</span>
+<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой; Energy Resources; бусад экспортлогчид"</span>,</span>
+<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal"</span>,</span>
+<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрс төсвийн орлого, валютын орлого, эдийн засгийн өсөлтийн гол хөдөлгүүр болов"</span>,</span>
+<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2024</span>, <span class="st">"policy"</span>,</span>
+<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зэсийн салбарыг стратегийн ач холбогдол бүхий салбар болгон хөгжүүлэх бодлогын хэлэлцүүлэг эрчимжив"</span>,</span>
+<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; УИХ; Эрдэнэс Монгол"</span>,</span>
+<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper"</span>,</span>
+<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зэсийг Монголын эдийн засгийн урт хугацааны гол стратегийн түүхий эд болгох чиглэл"</span>,</span>
+<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2024</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уран олборлолтын томоохон хөрөнгө оруулалтын гэрээний хэлэлцээ ахив"</span>,</span>
+<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Orano"</span>,</span>
+<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a>  <span class="st">"uranium"</span>,</span>
+<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын уул уурхайн бүтээгдэхүүний бүтцэд ураныг нэмэх боломж бий болов"</span>,</span>
+<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2024</span>, <span class="st">"company"</span>,</span>
+<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Монгол нэгдлийн төрийн өмчит уул уурхайн компаниудын засаглал, бүтцийн шинэчлэл үргэлжив"</span>,</span>
+<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Монгол; Эрдэнэс Таван Толгой; Эрдэнэт үйлдвэр"</span>,</span>
+<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a>  <span class="st">"coal; copper"</span>,</span>
+<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит уул уурхайн активыг нэгтгэн удирдах бодлого бэхжив"</span>,</span>
+<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2025–2026 — New phase: copper, uranium, renegotiation</span></span>
+<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ─────────────────────────────────────────────</span></span>
+<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2025</span>, <span class="st">"case"</span>,</span>
+<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн төслийн өртөг, хугацааны талаарх хөрөнгө оруулагчдын нэхэмжлэлтэй холбоотой олон улсын маргаан үргэлжлэв"</span>,</span>
+<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto; Turquoise Hill; хөрөнгө оруулагчид"</span>,</span>
+<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Том төслийн disclosure, cost overrun, investor protection-ийн асуудал олон улсын түвшинд яригдав"</span>,</span>
+<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2025</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн үйлдвэрлэл нэмэгдэж, төслийн эдийн засгийн үр өгөөжийн асуудал дахин төвд орлоо"</span>,</span>
+<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Oyu Tolgoi LLC; Rio Tinto; Монголын Засгийн газар"</span>,</span>
+<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын зэсийн экспортын урт хугацааны өсөлтийн гол эх үүсвэр"</span>,</span>
+<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2025</span>, <span class="st">"policy"</span>,</span>
+<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн салбарт баялгийн өгөөж, төрийн өмчит компанийн засаглал, экспортын гэрээний ил тод байдлыг нэмэгдүүлэх бодлого үргэлжив"</span>,</span>
+<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; УИХ"</span>,</span>
+<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a>  <span class="st">"all"</span>,</span>
+<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Mining governance шинэчлэлийн гол чиглэлүүд үргэлжилсэн"</span>,</span>
+<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2026</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн гэрээний нөхцөлийг Монголын тал дахин хэлэлцэх шаардлага тавив"</span>,</span>
+<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Rio Tinto"</span>,</span>
+<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; gold"</span>,</span>
+<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зээлийн хүү, менежментийн төлбөр, Монголын эдийн засгийн өгөөжийг дахин хэлэлцэх улс төрийн шинэ мөчлөг"</span>,</span>
+<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2026</span>, <span class="st">"investment"</span>,</span>
+<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Орано Монголд Зөөвч-Овоогийн ураны төслийг хөгжүүлэх шинэ үе шатанд шилжив"</span>,</span>
+<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Orano; Монголын Засгийн газар"</span>,</span>
+<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a>  <span class="st">"uranium"</span>,</span>
+<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн хөрөнгө оруулалтын бүтцэд ураны шинэ том төсөл нэмэгдэх үе"</span>,</span>
+<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2026</span>, <span class="st">"policy"</span>,</span>
+<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зэс, уран болон стратегийн ашигт малтмалын хөрөнгө оруулалтыг нэмэгдүүлэх бодлого эрчимжив"</span>,</span>
+<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; УИХ; олон улсын хөрөнгө оруулагчид"</span>,</span>
+<span id="cb3-376"><a href="#cb3-376" aria-hidden="true" tabindex="-1"></a>  <span class="st">"copper; uranium; critical minerals"</span>,</span>
+<span id="cb3-377"><a href="#cb3-377" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын уул уурхайн бодлого нүүрснээс зэс, уран, critical minerals руу төрөлжих чиглэлд шилжих боломж"</span></span>
+<span id="cb3-378"><a href="#cb3-378" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mining_timeline_detail <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>date, <span class="sc">~</span>year, <span class="sc">~</span>type, <span class="sc">~</span>subtype, <span class="sc">~</span>event, <span class="sc">~</span>actors, <span class="sc">~</span>project_company, <span class="sc">~</span>commodity, <span class="sc">~</span>governance_relevance, <span class="sc">~</span>source_id,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1970–1990: STATE MINING SYSTEM</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1973-01-01"</span>, <span class="dv">1973</span>, <span class="st">"company"</span>, <span class="st">"state_owned"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголсовцветмет нэгдэл байгуулагдав"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монгол Улс; ЗХУ"</span>, <span class="st">"Монголсовцветмет"</span>, <span class="st">"fluorspar; copper; other"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн төвлөрсөн уул уурхайн системийн үндэс"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-01"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1978-12-14"</span>, <span class="dv">1978</span>, <span class="st">"company"</span>, <span class="st">"state_owned"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэт үйлдвэр ашиглалтад оров"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монгол Улс; ЗХУ"</span>, <span class="st">"Эрдэнэт үйлдвэр"</span>, <span class="st">"copper; molybdenum"</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын уул уурхайн хамгийн том төрийн өмчит үйлдвэрийн суурь"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-01"</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1990–1999: MARKET TRANSITION AND LICENSING</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1990-01-01"</span>, <span class="dv">1990</span>, <span class="st">"policy"</span>, <span class="st">"transition"</span>,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зах зээлийн эдийн засагт шилжиж, уул уурхайн салбарын хувийн хөрөнгө оруулалтын орчин бүрэлдэж эхлэв"</span>,</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монгол Улсын Засгийн газар; УИХ"</span>, <span class="cn">NA</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмч давамгайлсан тогтолцооноос лиценз, хөрөнгө оруулалтад суурилсан тогтолцоонд шилжилт"</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-02"</span>,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1991-01-01"</span>, <span class="dv">1991</span>, <span class="st">"policy"</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Алт хөтөлбөр хэрэгжиж эхлэв"</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; Монголбанк; хувийн олборлогчид"</span>, <span class="cn">NA</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Алтны олборлолтыг эдийн засгийн сэргэлтийн хэрэгсэл болгон ашиглав"</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-03"</span>,</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1994-01-01"</span>, <span class="dv">1994</span>, <span class="st">"law"</span>, <span class="st">"minerals_law"</span>,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ашигт малтмалын тухай хууль батлагдав"</span>,</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>, <span class="cn">NA</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зах зээлийн үеийн уул уурхайн эрх зүйн анхны суурь"</span>,</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-01"</span>,</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1997-07-01"</span>, <span class="dv">1997</span>, <span class="st">"law"</span>, <span class="st">"minerals_law"</span>,</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ашигт малтмалын тухай шинэчилсэн хууль хэрэгжиж эхлэв"</span>,</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>, <span class="cn">NA</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Хайгуул, ашиглалтын лицензийн тогтолцоог бэхжүүлж, гадаадын хөрөнгө оруулалтыг татах суурь болов"</span>,</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-04"</span>,</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">"1997-01-01"</span>, <span class="dv">1997</span>, <span class="st">"institution"</span>, <span class="st">"regulator"</span>,</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ашигт малтмалын газар байгуулагдав"</span>,</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар"</span>, <span class="st">"АМГ"</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн лицензийн төрийн захиргааны институц бий болов"</span>,</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-05"</span>,</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2000–2005: BOOM AND OYU TOLGOI</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2000-01-01"</span>, <span class="dv">2000</span>, <span class="st">"investment"</span>, <span class="st">"exploration"</span>,</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн хайгуул эрчимжив"</span>,</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ivanhoe Mines"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын зэсийн салбарт олон улсын томоохон хөрөнгө оруулалтын эхлэл"</span>,</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-06"</span>,</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2001-01-01"</span>, <span class="dv">2001</span>, <span class="st">"discovery"</span>, <span class="st">"copper_gold"</span>,</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн дэлхийн хэмжээний зэс-алтны ордын ач холбогдол тодорхой болов"</span>,</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ivanhoe Mines"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын уул уурхайн ирээдүйн хамгийн том төслийн суурь тавигдав"</span>,</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-06"</span>,</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2001-01-01"</span>, <span class="dv">2001</span>, <span class="st">"production"</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Алтны олборлолт өмнөх арван жилийнхээс эрс өсөв"</span>,</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Алт олборлогчид; Монголбанк"</span>, <span class="cn">NA</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Алт уул уурхайн экспортын гол бүтээгдэхүүний нэг болов"</span>,</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-03"</span>,</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2002-01-01"</span>, <span class="dv">2002</span>, <span class="st">"investment"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгой ордыг хөгжүүлэх бодлого эрчимжив"</span>,</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын төр; дотоодын компаниуд"</span>, <span class="st">"Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын коксжих нүүрсний стратегийн орд болох суурь"</span>,</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-07"</span>,</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2004-01-01"</span>, <span class="dv">2004</span>, <span class="st">"export"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгой ордоос нүүрсний экспорт эхлэв"</span>,</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Тавантолгой ХК"</span>, <span class="st">"Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын нүүрсний экспортын шинэ үе эхлэв"</span>,</span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-07"</span>,</span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2004-01-01"</span>, <span class="dv">2004</span>, <span class="st">"institution"</span>, <span class="st">"regulator"</span>,</span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ашигт малтмалын газар болон Газрын тосны хэрэг эрхлэх газар нэгтгэгдэж МРПАМ байгуулагдав"</span>,</span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар"</span>, <span class="st">"MRPAM"</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхай, газрын тосны зохицуулалтын институцийн өөрчлөлт"</span>,</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-05"</span>,</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2006–2010: RESOURCE NATIONALISM / OT AGREEMENT</span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2006-01-01"</span>, <span class="dv">2006</span>, <span class="st">"civil_society"</span>, <span class="st">"oyu_tolgoi_protest"</span>,</span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн хөрөнгө оруулалт, гадаадын хөрөнгө оруулалтын нөхцөлийг эсэргүүцсэн томоохон иргэний хөдөлгөөн, жагсаал өрнөв"</span>,</span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Иргэний хөдөлгөөнүүд; байгаль орчны бүлгүүд"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн баялгийн өгөөж, байгаль орчин, үндэсний ашиг сонирхлын асуудал олон нийтийн улс төрийн сэдэв болов"</span>,</span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-08"</span>,</span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2006-07-08"</span>, <span class="dv">2006</span>, <span class="st">"law"</span>, <span class="st">"minerals_law"</span>,</span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ашигт малтмалын тухай хуулийн шинэчилсэн найруулга батлагдав"</span>,</span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>, <span class="cn">NA</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Стратегийн ач холбогдол бүхий ордын төрийн оролцооны эрх зүйн суурь бий болов"</span>,</span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-04"</span>,</span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2006-07-08"</span>, <span class="dv">2006</span>, <span class="st">"law"</span>, <span class="st">"strategic_deposit"</span>,</span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Стратегийн ач холбогдол бүхий ордын ангилал бий болов"</span>,</span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>, <span class="cn">NA</span>, <span class="st">"copper; coal; gold"</span>,</span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төр стратегийн ордын хувьцаанд 34 хүртэл хувь эзэмших боломж бүрдэв"</span>,</span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-09"</span>,</span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2006-12-01"</span>, <span class="dv">2006</span>, <span class="st">"tax"</span>, <span class="st">"windfall_tax"</span>,</span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зарим ашигт малтмалын өндөр үнийн үед гэнэтийн ашгийн татвар авах зохицуулалт бий болов"</span>,</span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>, <span class="cn">NA</span>, <span class="st">"gold; copper"</span>,</span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн rent-ийг төрд төвлөрүүлэх бодлого эрчимжив"</span>,</span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-10"</span>,</span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2007-01-01"</span>, <span class="dv">2007</span>, <span class="st">"tax"</span>, <span class="st">"windfall_tax"</span>,</span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гэнэтийн ашгийн татвар хэрэгжиж эхлэв"</span>,</span>
+<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Татварын байгууллага; уул уурхайн компаниуд"</span>, <span class="cn">NA</span>, <span class="st">"gold; copper"</span>,</span>
+<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн татварын орлогын бүтэц, хөрөнгө оруулагчдын эрсдэлийн талаарх маргаан"</span>,</span>
+<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-10"</span>,</span>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2008-01-01"</span>, <span class="dv">2008</span>, <span class="st">"political_economy"</span>, <span class="st">"ot_negotiation"</span>,</span>
+<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн хөрөнгө оруулалтын гэрээний хэлэлцээ улс төрийн гол асуудал болов"</span>,</span>
+<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар; Ivanhoe Mines"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн эзэмшил, татвар, тогтвортой байдлын асуудал"</span>,</span>
+<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-06"</span>,</span>
+<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2009-10-06"</span>, <span class="dv">2009</span>, <span class="st">"investment"</span>, <span class="st">"investment_agreement"</span>,</span>
+<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн Хөрөнгө оруулалтын гэрээ байгуулагдав"</span>,</span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Ivanhoe Mines; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын түүхэн дэх хамгийн том уул уурхайн хөрөнгө оруулалтын гэрээнүүдийн нэг"</span>,</span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-06"</span>,</span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2009-01-01"</span>, <span class="dv">2009</span>, <span class="st">"law"</span>, <span class="st">"long_named_law"</span>,</span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гол мөрний урсац бүрэлдэх эх, усны сан бүхий газрын хамгаалалтын бүс, ойн сан бүхий газарт ашигт малтмал хайх, ашиглахыг хориглох тухай хууль батлагдав"</span>,</span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; иргэний нийгэм"</span>, <span class="cn">NA</span>, <span class="st">"gold; coal; all"</span>,</span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Байгаль орчны хамгаалалт болон уул уурхайн лицензийн зөрчлийг зохицуулах шинэ дэглэм"</span>,</span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-11"</span>,</span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2009-01-01"</span>, <span class="dv">2009</span>, <span class="st">"law"</span>, <span class="st">"nuclear"</span>,</span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Цөмийн энергийн тухай хууль батлагдав"</span>,</span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>, <span class="cn">NA</span>, <span class="st">"uranium"</span>,</span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ураны хайгуул, олборлолтын эрх зүйн суурь"</span>,</span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-12"</span>,</span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2010-01-01"</span>, <span class="dv">2010</span>, <span class="st">"company"</span>, <span class="st">"state_owned"</span>,</span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Монгол ХХК байгуулагдав"</span>,</span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар"</span>, <span class="st">"Erdenes Mongol"</span>, <span class="st">"coal; copper; iron; uranium"</span>,</span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Стратегийн уул уурхайн төрийн активыг нэгтгэн удирдах төрийн өмчит холдинг бий болов"</span>,</span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-13"</span>,</span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2010-04-01"</span>, <span class="dv">2010</span>, <span class="st">"civil_society"</span>, <span class="st">"environment"</span>,</span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн байгаль орчны нөлөөллийн эсрэг иргэний хөдөлгөөнүүд идэвхжив"</span>,</span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Онги гол; Монголын гол, нууруудын нэгдсэн хөдөлгөөн; бусад ТББ"</span>, <span class="cn">NA</span>, <span class="st">"gold; coal"</span>,</span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн лиценз, ус, гол мөрний хамгаалалт иргэний нийгмийн гол асуудал болов"</span>,</span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-14"</span>,</span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2010-09-02"</span>, <span class="dv">2010</span>, <span class="st">"case"</span>, <span class="st">"civil_disobedience"</span>,</span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гал үндэстэн хөдөлгөөнтэй холбоотой уурхайн техник рүү буудсан хэрэг гарч, хөдөлгөөний идэвхтнүүд баривчлагдав"</span>,</span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гал үндэстэн; цагдаа; уул уурхайн компаниуд"</span>, <span class="cn">NA</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Иргэний хөдөлгөөний радикал хэлбэр, төрийн хариу арга хэмжээний томоохон жишээ"</span>,</span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-15"</span>,</span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2010-12-01"</span>, <span class="dv">2010</span>, <span class="st">"company"</span>, <span class="st">"state_owned"</span>,</span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой ХК байгуулагдав"</span>,</span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгойг төрийн өмчит компанийн бүтэцтэйгээр хөгжүүлэх шийдвэр"</span>,</span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-16"</span>,</span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2011–2015: COAL BOOM / GAL UNDESTEN / NOYON UUL</span></span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2011-01-01"</span>, <span class="dv">2011</span>, <span class="st">"production"</span>, <span class="st">"oyu_tolgoi"</span>,</span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн ил уурхайн бүтээн байгуулалт, олборлолтын үе эхлэв"</span>,</span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Oyu Tolgoi LLC; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын зэсийн үйлдвэрлэлийн шинэ үе"</span>,</span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-06"</span>,</span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2011-01-01"</span>, <span class="dv">2011</span>, <span class="st">"export"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгойн нүүрсний экспорт огцом өсөв"</span>,</span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой; Тавантолгой ХК; Energy Resources"</span>, <span class="st">"Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрс Монголын экспорт, төсвийн орлогын гол эх үүсвэр болов"</span>,</span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-16"</span>,</span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2011-06-29"</span>, <span class="dv">2011</span>, <span class="st">"case"</span>, <span class="st">"gal_undesten"</span>,</span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гал үндэстэн хөдөлгөөний удирдагчидтай холбоотой уурхайн буудлагын хэрэг шүүх, мөрдөн шалгах ажиллагаанд шилжив"</span>,</span>
+<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гал үндэстэн; хууль сахиулах байгууллага"</span>, <span class="cn">NA</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн эсэргүүцэл ба эрүүгийн эрх зүйн мөргөлдөөн"</span>,</span>
+<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-15"</span>,</span>
+<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2012-05-01"</span>, <span class="dv">2012</span>, <span class="st">"law"</span>, <span class="st">"foreign_investment"</span>,</span>
+<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Стратегийн салбар дахь гадаадын хөрөнгө оруулалтад төрийн зөвшөөрөл, хяналт тавих зохицуулалт бий болов"</span>,</span>
+<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>, <span class="cn">NA</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гадаадын хөрөнгө оруулалтын улс төрийн эрсдэл нэмэгдэв"</span>,</span>
+<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-17"</span>,</span>
+<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2012-06-01"</span>, <span class="dv">2012</span>, <span class="st">"civil_society"</span>, <span class="st">"noyon_uul"</span>,</span>
+<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нойон уулын хамгаалалтын талаарх иргэний болон бөө мөргөлийн хөдөлгөөнүүд идэвхжив"</span>,</span>
+<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Иргэний нийгэм; бөө мөргөлийн холбоод"</span>, <span class="st">"Gatsuurt; Noyon Uul"</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн төслийг соёлын өв, байгаль орчны хамгаалалттай холбосон шинэ хэлбэрийн хөдөлгөөн"</span>,</span>
+<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-18"</span>,</span>
+<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2013-04-01"</span>, <span class="dv">2013</span>, <span class="st">"investment"</span>, <span class="st">"ot_phase2"</span>,</span>
+<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн II үе шатны хөрөнгө оруулалтын төлөвлөгөөтэй холбоотой зардал, санхүүжилтийн маргаан хурцдав"</span>,</span>
+<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto; Oyu Tolgoi LLC; Монголын Засгийн газар"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Далд уурхайн хөрөнгө оруулалтын өртөг, Монголын өгөөжийн маргааны эхлэл"</span>,</span>
+<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-19"</span>,</span>
+<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2014-06-01"</span>, <span class="dv">2014</span>, <span class="st">"law"</span>, <span class="st">"minerals_law"</span>,</span>
+<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ашигт малтмалын тухай хуульд томоохон нэмэлт, өөрчлөлт оруулав"</span>,</span>
+<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ"</span>, <span class="cn">NA</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Лиценз, хөрөнгө оруулалт, хайгуулын эрх зүйн орчныг дахин өөрчилсөн"</span>,</span>
+<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-20"</span>,</span>
+<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2014-01-01"</span>, <span class="dv">2014</span>, <span class="st">"policy"</span>, <span class="st">"minerals_policy"</span>,</span>
+<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрөөс эрдэс баялгийн салбарт баримтлах бодлого 2014–2025 батлагдав"</span>,</span>
+<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>, <span class="cn">NA</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн салбарын урт хугацааны бодлогын чиглэл"</span>,</span>
+<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-01"</span>,</span>
+<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2015-01-01"</span>, <span class="dv">2015</span>, <span class="st">"civil_society"</span>, <span class="st">"noyon_uul"</span>,</span>
+<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нойон уулыг хамгаалах хөдөлгөөн Гацууртын алтны төслийг эсэргүүцэн өргөжөв"</span>,</span>
+<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Save Noyon Uul; Bosoo Khukh Mongol; Гал үндэстэн; иргэд"</span>, <span class="st">"Gatsuurt; Noyon Uul"</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Байгаль орчин, археологийн өв, уул уурхайн хөрөнгө оруулалтын зөрчил"</span>,</span>
+<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-21"</span>,</span>
+<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2015-02-01"</span>, <span class="dv">2015</span>, <span class="st">"civil_society"</span>, <span class="st">"hunger_strike"</span>,</span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нойон уулыг хамгаалагчид өлсгөлөн зарлав"</span>,</span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Save Noyon Uul; иргэний хөдөлгөөнүүд"</span>, <span class="st">"Gatsuurt; Noyon Uul"</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Иргэний нийгмийн эсэргүүцэл улс төрийн төв түвшинд хүрэв"</span>,</span>
+<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-21"</span>,</span>
+<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2015-01-01"</span>, <span class="dv">2015</span>, <span class="st">"law"</span>, <span class="st">"strategic_project"</span>,</span>
+<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гацууртын алтны ордыг стратегийн ач холбогдол бүхий ордод хамааруулах асуудал УИХ-аар шийдэгдэв"</span>,</span>
+<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Centerra Gold"</span>, <span class="st">"Gatsuurt"</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Стратегийн орд, төрийн оролцоо, иргэний эсэргүүцлийн огтлолцол"</span>,</span>
+<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-22"</span>,</span>
+<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2015-01-01"</span>, <span class="dv">2015</span>, <span class="st">"investment"</span>, <span class="st">"tavan_tolgoi"</span>,</span>
+<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгойн хөрөнгө оруулалтын гэрээний шинэ хувилбар хэлэлцэгдэв"</span>,</span>
+<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Energy Resources; Shenhua; Sumitomo"</span>, <span class="st">"Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит ордыг гадаадын хөрөнгө оруулалтаар хөгжүүлэх оролдлого"</span>,</span>
+<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-23"</span>,</span>
+<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2016–2019: ERDENET 49% / OT TAX / GOLD</span></span>
+<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2016-06-01"</span>, <span class="dv">2016</span>, <span class="st">"company"</span>, <span class="st">"erdenet_49"</span>,</span>
+<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэт үйлдвэрийн 49 хувийг Монголын талын хувийн компанид шилжүүлсэн хэлцэл хийгдэв"</span>,</span>
+<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Mongolian Copper Corporation"</span>, <span class="st">"Erdenet"</span>, <span class="st">"copper; molybdenum"</span>,</span>
+<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчийн стратегийн үйлдвэрийн өмчлөл, санхүүжилтийн асуудал"</span>,</span>
+<span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-24"</span>,</span>
+<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2016-07-01"</span>, <span class="dv">2016</span>, <span class="st">"case"</span>, <span class="st">"erdenet_49"</span>,</span>
+<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэт үйлдвэрийн 49 хувийн хэлцэлтэй холбоотой улс төр, эрх зүйн маргаан эхлэв"</span>,</span>
+<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар; Mongolian Copper Corporation"</span>, <span class="st">"Erdenet"</span>, <span class="st">"copper"</span>,</span>
+<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчийн шилжилт, хэлцлийн ил тод байдал, эрх зүйн үндэслэлийн маргаан"</span>,</span>
+<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-24"</span>,</span>
+<span id="cb4-273"><a href="#cb4-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2016-01-01"</span>, <span class="dv">2016</span>, <span class="st">"investment"</span>, <span class="st">"gatsuurt"</span>,</span>
+<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Гацууртын төслийн хөрөнгө оруулалтын хэлэлцээ улс төрийн маргаантай хэвээр үргэлжлэв"</span>,</span>
+<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Centerra Gold; Монголын Засгийн газар; иргэний нийгэм"</span>, <span class="st">"Gatsuurt"</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Хөрөнгө оруулагч–төр–иргэний нийгмийн зөрчлийн жишээ"</span>,</span>
+<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-22"</span>,</span>
+<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2017-01-18"</span>, <span class="dv">2017</span>, <span class="st">"policy"</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Алт-2 үндэсний хөтөлбөр батлагдав"</span>,</span>
+<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; Монголбанк; УУХҮЯ"</span>, <span class="cn">NA</span>, <span class="st">"gold"</span>,</span>
+<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Алтны олборлолтыг нэмэгдүүлэх, эдийн засгийг сэргээх бодлого"</span>,</span>
+<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-25"</span>,</span>
+<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2017-01-01"</span>, <span class="dv">2017</span>, <span class="st">"case"</span>, <span class="st">"erdenet"</span>,</span>
+<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэт үйлдвэрийн өмчлөлийн маргаан хууль, шүүхийн байгууллагуудад үргэлжлэв"</span>,</span>
+<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын төр; Mongolian Copper Corporation"</span>, <span class="st">"Erdenet"</span>, <span class="st">"copper"</span>,</span>
+<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Стратегийн төрийн өмчийн засаглалын маргаан"</span>,</span>
+<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-24"</span>,</span>
+<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2017-01-01"</span>, <span class="dv">2017</span>, <span class="st">"case"</span>, <span class="st">"ot_tax"</span>,</span>
+<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн татварын маргаан, татварын акттай холбоотой асуудал хурцдав"</span>,</span>
+<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Татварын байгууллага; Oyu Tolgoi LLC; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-295"><a href="#cb4-295" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Том төслийн татварын орлого, зардал, гэрээний тогтвортой байдлын асуудал"</span>,</span>
+<span id="cb4-296"><a href="#cb4-296" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-26"</span>,</span>
+<span id="cb4-297"><a href="#cb4-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-298"><a href="#cb4-298" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2018-01-01"</span>, <span class="dv">2018</span>, <span class="st">"investment"</span>, <span class="st">"ot_power"</span>,</span>
+<span id="cb4-299"><a href="#cb4-299" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойг Монголын дотоодын эрчим хүчний системтэй холбох асуудал тохиролцооны түвшинд орлоо"</span>,</span>
+<span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Oyu Tolgoi LLC"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper"</span>,</span>
+<span id="cb4-301"><a href="#cb4-301" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн том төслийн эрчим хүчний хангамж, дотоодын өгөөж"</span>,</span>
+<span id="cb4-302"><a href="#cb4-302" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-27"</span>,</span>
+<span id="cb4-303"><a href="#cb4-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-304"><a href="#cb4-304" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2019-01-01"</span>, <span class="dv">2019</span>, <span class="st">"policy"</span>, <span class="st">"ot_resolution"</span>,</span>
+<span id="cb4-305"><a href="#cb4-305" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ Оюу Толгойн төслөөс Монголын эрх ашгийг хангах тухай 92 дугаар тогтоол батлав"</span>,</span>
+<span id="cb4-306"><a href="#cb4-306" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-307"><a href="#cb4-307" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн гэрээ, санхүүжилт, өгөөжийг дахин хэлэлцэх улс төрийн суурь"</span>,</span>
+<span id="cb4-308"><a href="#cb4-308" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-28"</span>,</span>
+<span id="cb4-309"><a href="#cb4-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-310"><a href="#cb4-310" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2019-01-01"</span>, <span class="dv">2019</span>, <span class="st">"case"</span>, <span class="st">"ot_cost_overrun"</span>,</span>
+<span id="cb4-311"><a href="#cb4-311" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн зардал, хугацааны өсөлттэй холбоотой маргаан хурцдав"</span>,</span>
+<span id="cb4-312"><a href="#cb4-312" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto; Turquoise Hill; Монголын Засгийн газар"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-313"><a href="#cb4-313" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Cost overrun, project governance, shareholder value"</span>,</span>
+<span id="cb4-314"><a href="#cb4-314" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-29"</span>,</span>
+<span id="cb4-315"><a href="#cb4-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-316"><a href="#cb4-316" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2019-01-01"</span>, <span class="dv">2019</span>, <span class="st">"governance"</span>, <span class="st">"soes"</span>,</span>
+<span id="cb4-317"><a href="#cb4-317" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит уул уурхайн компаниудын засаглалын шинэчлэлийн асуудал эрчимжив"</span>,</span>
+<span id="cb4-318"><a href="#cb4-318" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; Эрдэнэс Монгол"</span>, <span class="st">"Erdenes Mongol"</span>, <span class="st">"coal; copper"</span>,</span>
+<span id="cb4-319"><a href="#cb4-319" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчийн төвлөрсөн засаглалын асуудал"</span>,</span>
+<span id="cb4-320"><a href="#cb4-320" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-30"</span>,</span>
+<span id="cb4-321"><a href="#cb4-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-322"><a href="#cb4-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-323"><a href="#cb4-323" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-324"><a href="#cb4-324" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2020–2022: COAL / OT RESET / ANTI-CORRUPTION</span></span>
+<span id="cb4-325"><a href="#cb4-325" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-326"><a href="#cb4-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-327"><a href="#cb4-327" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2020-01-01"</span>, <span class="dv">2020</span>, <span class="st">"investment"</span>, <span class="st">"ot_power"</span>,</span>
+<span id="cb4-328"><a href="#cb4-328" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Таван Толгойн цахилгаан станцын төслийг төрийн бодлогын түвшинд урагшлуулав"</span>,</span>
+<span id="cb4-329"><a href="#cb4-329" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Oyu Tolgoi LLC"</span>, <span class="st">"Tavan Tolgoi Power Plant"</span>, <span class="st">"coal; copper"</span>,</span>
+<span id="cb4-330"><a href="#cb4-330" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн дотоодын эрчим хүчний хангамжийн асуудал"</span>,</span>
+<span id="cb4-331"><a href="#cb4-331" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-31"</span>,</span>
+<span id="cb4-332"><a href="#cb4-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-333"><a href="#cb4-333" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2020-01-01"</span>, <span class="dv">2020</span>, <span class="st">"governance"</span>, <span class="st">"soes"</span>,</span>
+<span id="cb4-334"><a href="#cb4-334" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Монголын төрийн өмчит уул уурхайн активын засаглалын шинэчлэл хэлэлцэгдэв"</span>,</span>
+<span id="cb4-335"><a href="#cb4-335" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; Эрдэнэс Монгол"</span>, <span class="st">"Erdenes Mongol"</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-336"><a href="#cb4-336" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит компанийн төвлөрсөн удирдлага"</span>,</span>
+<span id="cb4-337"><a href="#cb4-337" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-30"</span>,</span>
+<span id="cb4-338"><a href="#cb4-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-339"><a href="#cb4-339" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2021-10-01"</span>, <span class="dv">2021</span>, <span class="st">"political_economy"</span>, <span class="st">"ot_negotiation"</span>,</span>
+<span id="cb4-340"><a href="#cb4-340" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн гэрээний Монголын өгөөжийг нэмэгдүүлэх асуудлаар улс төрийн дарамт нэмэгдэв"</span>,</span>
+<span id="cb4-341"><a href="#cb4-341" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-342"><a href="#cb4-342" aria-hidden="true" tabindex="-1"></a>  <span class="st">"34 хувийн эзэмшлийн эдийн засгийн өгөөж, өрийн дарамтын асуудал"</span>,</span>
+<span id="cb4-343"><a href="#cb4-343" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-28"</span>,</span>
+<span id="cb4-344"><a href="#cb4-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-345"><a href="#cb4-345" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2021-12-28"</span>, <span class="dv">2021</span>, <span class="st">"law"</span>, <span class="st">"ot_resolution"</span>,</span>
+<span id="cb4-346"><a href="#cb4-346" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ Оюу Толгойгоос Монголын хүртэх үр ашгийг нэмэгдүүлэх арга хэмжээний тухай асуудлыг хэлэлцэв"</span>,</span>
+<span id="cb4-347"><a href="#cb4-347" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-348"><a href="#cb4-348" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2021–2022 оны Оюу Толгойн дахин тохиролцооны улс төрийн суурь"</span>,</span>
+<span id="cb4-349"><a href="#cb4-349" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-32"</span>,</span>
+<span id="cb4-350"><a href="#cb4-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-351"><a href="#cb4-351" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2022-01-01"</span>, <span class="dv">2022</span>, <span class="st">"investment"</span>, <span class="st">"ot_reset"</span>,</span>
+<span id="cb4-352"><a href="#cb4-352" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн төслийн шинэ тохиролцоонд хүрэв"</span>,</span>
+<span id="cb4-353"><a href="#cb4-353" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Rio Tinto; Turquoise Hill"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-354"><a href="#cb4-354" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын талын 2.4 тэрбум ам.долларын carry loan-ыг хүчингүй болгож, далд уурхайн төслийг урагшлуулав"</span>,</span>
+<span id="cb4-355"><a href="#cb4-355" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-33"</span>,</span>
+<span id="cb4-356"><a href="#cb4-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-357"><a href="#cb4-357" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2022-01-01"</span>, <span class="dv">2022</span>, <span class="st">"company"</span>, <span class="st">"ot_ownership"</span>,</span>
+<span id="cb4-358"><a href="#cb4-358" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto Turquoise Hill Resources-ийн үлдсэн хувьцааг худалдан авч Оюу Толгойн төслийг бүрэн хяналтдаа авав"</span>,</span>
+<span id="cb4-359"><a href="#cb4-359" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto; Turquoise Hill; Монголын төр"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-360"><a href="#cb4-360" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Операторын өмчлөлийн бүтэц эцэслэв"</span>,</span>
+<span id="cb4-361"><a href="#cb4-361" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-34"</span>,</span>
+<span id="cb4-362"><a href="#cb4-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-363"><a href="#cb4-363" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2022-12-01"</span>, <span class="dv">2022</span>, <span class="st">"civil_society"</span>, <span class="st">"coal_protest"</span>,</span>
+<span id="cb4-364"><a href="#cb4-364" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний хулгайн эсрэг олон нийтийн томоохон жагсаал, хөдөлгөөн эхлэв"</span>,</span>
+<span id="cb4-365"><a href="#cb4-365" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Иргэд; иргэний хөдөлгөөнүүд; залуучууд"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-366"><a href="#cb4-366" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит компанийн засаглал, нүүрсний борлуулалт, авлигын асуудал улс төрийн төвд орлоо"</span>,</span>
+<span id="cb4-367"><a href="#cb4-367" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-35"</span>,</span>
+<span id="cb4-368"><a href="#cb4-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-369"><a href="#cb4-369" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2022-12-01"</span>, <span class="dv">2022</span>, <span class="st">"case"</span>, <span class="st">"coal_theft"</span>,</span>
+<span id="cb4-370"><a href="#cb4-370" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний экспорт, борлуулалт, тээвэртэй холбоотой авлигын хэргүүдийг мөрдөн шалгах ажиллагаа эрчимжив"</span>,</span>
+<span id="cb4-371"><a href="#cb4-371" aria-hidden="true" tabindex="-1"></a>  <span class="st">"АТГ; цагдаа; прокурор; Эрдэнэс Таван Толгой"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-372"><a href="#cb4-372" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит компанийн борлуулалт, гэрээ, зуучлалын авлигын эрсдэл"</span>,</span>
+<span id="cb4-373"><a href="#cb4-373" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-36"</span>,</span>
+<span id="cb4-374"><a href="#cb4-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-375"><a href="#cb4-375" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2022-12-01"</span>, <span class="dv">2022</span>, <span class="st">"governance"</span>, <span class="st">"coal_transparency"</span>,</span>
+<span id="cb4-376"><a href="#cb4-376" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгойн нүүрсний борлуулалт, гэрээний мэдээллийг ил тод болгох шаардлага нэмэгдэв"</span>,</span>
+<span id="cb4-377"><a href="#cb4-377" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Таван Толгой; Засгийн газар; иргэний нийгэм"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-378"><a href="#cb4-378" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ил тод байдал, beneficial ownership, экспортын гэрээний хяналт"</span>,</span>
+<span id="cb4-379"><a href="#cb4-379" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-35"</span>,</span>
+<span id="cb4-380"><a href="#cb4-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-381"><a href="#cb4-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-382"><a href="#cb4-382" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-383"><a href="#cb4-383" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2023: COAL HEARING / EXCHANGE / WEALTH FUND</span></span>
+<span id="cb4-384"><a href="#cb4-384" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-385"><a href="#cb4-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-386"><a href="#cb4-386" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2023-01-01"</span>, <span class="dv">2023</span>, <span class="st">"case"</span>, <span class="st">"coal_theft"</span>,</span>
+<span id="cb4-387"><a href="#cb4-387" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний хулгайн хэрэгтэй холбоотой мөрдөн шалгах, прокурорын ажиллагаа үргэлжилж, олон нийтийн дарамт нэмэгдэв"</span>,</span>
+<span id="cb4-388"><a href="#cb4-388" aria-hidden="true" tabindex="-1"></a>  <span class="st">"АТГ; прокурор; цагдаа; УИХ"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-389"><a href="#cb4-389" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн авлигын эсрэг төрийн байгууллагуудын хариу арга хэмжээ"</span>,</span>
+<span id="cb4-390"><a href="#cb4-390" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-36"</span>,</span>
+<span id="cb4-391"><a href="#cb4-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-392"><a href="#cb4-392" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2023-01-01"</span>, <span class="dv">2023</span>, <span class="st">"governance"</span>, <span class="st">"coal_exchange"</span>,</span>
+<span id="cb4-393"><a href="#cb4-393" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсийг биржээр арилжаалах шинэ тогтолцоо нэвтэрч эхлэв"</span>,</span>
+<span id="cb4-394"><a href="#cb4-394" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; Монголын хөрөнгийн бирж; Эрдэнэс Таван Толгой"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-395"><a href="#cb4-395" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний үнэ, борлуулалт, зуучлалын ил тод байдлыг нэмэгдүүлэх зорилго"</span>,</span>
+<span id="cb4-396"><a href="#cb4-396" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-37"</span>,</span>
+<span id="cb4-397"><a href="#cb4-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-398"><a href="#cb4-398" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2023-06-01"</span>, <span class="dv">2023</span>, <span class="st">"law"</span>, <span class="st">"wealth_fund"</span>,</span>
+<span id="cb4-399"><a href="#cb4-399" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Үндэсний баялгийн сангийн тухай хуулийн төсөл, баялгийн өгөөжийг иргэдэд хуваарилах бодлого эрчимжив"</span>,</span>
+<span id="cb4-400"><a href="#cb4-400" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; УИХ"</span>, <span class="cn">NA</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-401"><a href="#cb4-401" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн орлогыг хуримтлуулах, иргэдэд хүртээх институцийн шинэчлэл"</span>,</span>
+<span id="cb4-402"><a href="#cb4-402" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-38"</span>,</span>
+<span id="cb4-403"><a href="#cb4-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-404"><a href="#cb4-404" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2023-12-01"</span>, <span class="dv">2023</span>, <span class="st">"hearing"</span>, <span class="st">"coal_hearing"</span>,</span>
+<span id="cb4-405"><a href="#cb4-405" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний хулгайтай холбоотой УИХ-ын хянан шалгах түр хорооны нотлох баримт шинжлэн судлах нээлттэй сонсгол болов"</span>,</span>
+<span id="cb4-406"><a href="#cb4-406" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Хянан шалгах түр хороо; төрийн байгууллагууд; компаниуд"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-407"><a href="#cb4-407" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний экспорт, тээвэр, борлуулалт, гэрээ, улс төрийн нөлөөллийг олон нийтэд ил болгосон томоохон парламентын хяналтын ажиллагаа"</span>,</span>
+<span id="cb4-408"><a href="#cb4-408" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-39"</span>,</span>
+<span id="cb4-409"><a href="#cb4-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-410"><a href="#cb4-410" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2023-12-18"</span>, <span class="dv">2023</span>, <span class="st">"hearing"</span>, <span class="st">"coal_hearing"</span>,</span>
+<span id="cb4-411"><a href="#cb4-411" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрс тээвэрлэлт, экспортын мэдээлэлтэй холбоотой нотлох баримтыг сонсголд шинжлэв"</span>,</span>
+<span id="cb4-412"><a href="#cb4-412" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; шинжээчид; Эрдэнэс Таван Толгой"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-413"><a href="#cb4-413" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний экспортын хэмжээ, бүртгэл, тээврийн схемийн талаарх мэдээлэл олон нийтэд хүрэв"</span>,</span>
+<span id="cb4-414"><a href="#cb4-414" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-40"</span>,</span>
+<span id="cb4-415"><a href="#cb4-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-416"><a href="#cb4-416" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2023-01-01"</span>, <span class="dv">2023</span>, <span class="st">"production"</span>, <span class="st">"ot_underground"</span>,</span>
+<span id="cb4-417"><a href="#cb4-417" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн үйлдвэрлэлийн шинэ үе эхлэв"</span>,</span>
+<span id="cb4-418"><a href="#cb4-418" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Oyu Tolgoi LLC; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-419"><a href="#cb4-419" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын зэсийн үйлдвэрлэлийн урт хугацааны өсөлтийн гол эх үүсвэр"</span>,</span>
+<span id="cb4-420"><a href="#cb4-420" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-41"</span>,</span>
+<span id="cb4-421"><a href="#cb4-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-422"><a href="#cb4-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-423"><a href="#cb4-423" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-424"><a href="#cb4-424" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2024: WEALTH FUND / COAL GOVERNANCE</span></span>
+<span id="cb4-425"><a href="#cb4-425" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-426"><a href="#cb4-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-427"><a href="#cb4-427" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2024-01-16"</span>, <span class="dv">2024</span>, <span class="st">"hearing"</span>, <span class="st">"coal_hearing_report"</span>,</span>
+<span id="cb4-428"><a href="#cb4-428" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ Нүүрсний сонсголын тайлан болон Эрдэнэс Таван Толгойн хувьцаатай холбоотой асуудлыг хэлэлцэв"</span>,</span>
+<span id="cb4-429"><a href="#cb4-429" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Хянан шалгах түр хороо"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-430"><a href="#cb4-430" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсний сонсголын үр дүнг парламентын түвшинд хэлэлцсэн"</span>,</span>
+<span id="cb4-431"><a href="#cb4-431" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-42"</span>,</span>
+<span id="cb4-432"><a href="#cb4-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-433"><a href="#cb4-433" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2024-01-01"</span>, <span class="dv">2024</span>, <span class="st">"governance"</span>, <span class="st">"coal_exchange"</span>,</span>
+<span id="cb4-434"><a href="#cb4-434" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Нүүрсийг биржээр арилжаалах тогтолцоо өргөжиж, экспортын борлуулалтыг ил тод болгох бодлого үргэлжив"</span>,</span>
+<span id="cb4-435"><a href="#cb4-435" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; Эрдэнэс Таван Толгой; Монголын хөрөнгийн бирж"</span>, <span class="st">"Erdenes Tavan Tolgoi"</span>, <span class="st">"coal"</span>,</span>
+<span id="cb4-436"><a href="#cb4-436" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит компанийн борлуулалтын ил тод байдал"</span>,</span>
+<span id="cb4-437"><a href="#cb4-437" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-37"</span>,</span>
+<span id="cb4-438"><a href="#cb4-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-439"><a href="#cb4-439" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2024-04-01"</span>, <span class="dv">2024</span>, <span class="st">"law"</span>, <span class="st">"wealth_fund"</span>,</span>
+<span id="cb4-440"><a href="#cb4-440" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Үндэсний баялгийн сангийн тухай хууль батлагдав"</span>,</span>
+<span id="cb4-441"><a href="#cb4-441" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Засгийн газар"</span>, <span class="cn">NA</span>, <span class="st">"all"</span>,</span>
+<span id="cb4-442"><a href="#cb4-442" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн баялгийн өгөөжийг хуримтлуулах, иргэдэд хүртээх институцийн шинэ тогтолцоо"</span>,</span>
+<span id="cb4-443"><a href="#cb4-443" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-43"</span>,</span>
+<span id="cb4-444"><a href="#cb4-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-445"><a href="#cb4-445" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2024-01-01"</span>, <span class="dv">2024</span>, <span class="st">"company"</span>, <span class="st">"soes"</span>,</span>
+<span id="cb4-446"><a href="#cb4-446" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Монгол нэгдлийн төрийн өмчит уул уурхайн компаниудын засаглалын шинэчлэл үргэлжив"</span>,</span>
+<span id="cb4-447"><a href="#cb4-447" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Эрдэнэс Монгол; Эрдэнэс Таван Толгой; Эрдэнэт үйлдвэр"</span>, <span class="st">"Erdenes Mongol"</span>, <span class="st">"coal; copper"</span>,</span>
+<span id="cb4-448"><a href="#cb4-448" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Төрийн өмчит уул уурхайн активын төвлөрсөн засаглал"</span>,</span>
+<span id="cb4-449"><a href="#cb4-449" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-44"</span>,</span>
+<span id="cb4-450"><a href="#cb4-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-451"><a href="#cb4-451" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2024-01-01"</span>, <span class="dv">2024</span>, <span class="st">"policy"</span>, <span class="st">"copper"</span>,</span>
+<span id="cb4-452"><a href="#cb4-452" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зэсийн үйлдвэрлэл, нэмүү өртгийн сүлжээ, хайлуулах үйлдвэрийн бодлого эрчимжив"</span>,</span>
+<span id="cb4-453"><a href="#cb4-453" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Засгийн газар; Эрдэнэс Монгол; Эрдэнэт үйлдвэр"</span>, <span class="cn">NA</span>, <span class="st">"copper"</span>,</span>
+<span id="cb4-454"><a href="#cb4-454" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын уул уурхайн экспортын бүтэц нүүрснээс зэс рүү төрөлжих асуудал"</span>,</span>
+<span id="cb4-455"><a href="#cb4-455" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-45"</span>,</span>
+<span id="cb4-456"><a href="#cb4-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-457"><a href="#cb4-457" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2024-01-01"</span>, <span class="dv">2024</span>, <span class="st">"investment"</span>, <span class="st">"uranium"</span>,</span>
+<span id="cb4-458"><a href="#cb4-458" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оранотой Зөөвч-Овоогийн ураны төслийн хөрөнгө оруулалтын хэлэлцээ ахив"</span>,</span>
+<span id="cb4-459"><a href="#cb4-459" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Orano"</span>, <span class="st">"Zuuvch-Ovoo"</span>, <span class="st">"uranium"</span>,</span>
+<span id="cb4-460"><a href="#cb4-460" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ураныг Монголын шинэ стратегийн экспортын бүтээгдэхүүн болгох боломж"</span>,</span>
+<span id="cb4-461"><a href="#cb4-461" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-46"</span>,</span>
+<span id="cb4-462"><a href="#cb4-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-463"><a href="#cb4-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-464"><a href="#cb4-464" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-465"><a href="#cb4-465" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2025: OYU TOLGOI HEARING</span></span>
+<span id="cb4-466"><a href="#cb4-466" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-467"><a href="#cb4-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-468"><a href="#cb4-468" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2025-06-01"</span>, <span class="dv">2025</span>, <span class="st">"case"</span>, <span class="st">"ot_investor_litigation"</span>,</span>
+<span id="cb4-469"><a href="#cb4-469" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн далд уурхайн зардал, хугацааны талаар хөрөнгө оруулагчдын шүүхийн маргаантай холбоотой тохиролцоо яригдав"</span>,</span>
+<span id="cb4-470"><a href="#cb4-470" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rio Tinto; Turquoise Hill shareholders"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-471"><a href="#cb4-471" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Том уурхайн төслийн disclosure, cost overrun, investor protection"</span>,</span>
+<span id="cb4-472"><a href="#cb4-472" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-47"</span>,</span>
+<span id="cb4-473"><a href="#cb4-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-474"><a href="#cb4-474" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2025-09-24"</span>, <span class="dv">2025</span>, <span class="st">"governance"</span>, <span class="st">"ot_financing"</span>,</span>
+<span id="cb4-475"><a href="#cb4-475" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн санхүүжилтийн хүүгийн зохистой байдлыг хянан үзэх Засгийн газрын ажлын хэсэг байгуулагдав"</span>,</span>
+<span id="cb4-476"><a href="#cb4-476" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-477"><a href="#cb4-477" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын талын 34 хувийн эзэмшилтэй холбоотой өрийн өртөг, санхүүжилтийн нөхцөл"</span>,</span>
+<span id="cb4-478"><a href="#cb4-478" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-48"</span>,</span>
+<span id="cb4-479"><a href="#cb4-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-480"><a href="#cb4-480" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2025-12-01"</span>, <span class="dv">2025</span>, <span class="st">"hearing"</span>, <span class="st">"ot_hearing"</span>,</span>
+<span id="cb4-481"><a href="#cb4-481" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн төслийн Монголын хүртэх өгөөж, хувь нийлүүлэгчдийн гэрээтэй холбоотой УИХ-ын нотлох баримт шинжлэн судлах нээлттэй сонсгол болов"</span>,</span>
+<span id="cb4-482"><a href="#cb4-482" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Хянан шалгах түр хороо; Rio Tinto; Oyu Tolgoi"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-483"><a href="#cb4-483" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн гэрээ, төрийн эзэмшил, өгөөж, санхүүжилтийн нөхцөлийг парламентын хяналтад оруулав"</span>,</span>
+<span id="cb4-484"><a href="#cb4-484" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-49"</span>,</span>
+<span id="cb4-485"><a href="#cb4-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-486"><a href="#cb4-486" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2025-12-10"</span>, <span class="dv">2025</span>, <span class="st">"hearing"</span>, <span class="st">"ot_financing_hearing"</span>,</span>
+<span id="cb4-487"><a href="#cb4-487" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн хувь нийлүүлэгчдийн гэрээний санхүүжилтийн хүүгийн асуудлыг сонсголд шинжлэв"</span>,</span>
+<span id="cb4-488"><a href="#cb4-488" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Хянан шалгах түр хороо; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-489"><a href="#cb4-489" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын талын өрийн санхүүжилтийн өртөг, төслийн эдийн засгийн өгөөж"</span>,</span>
+<span id="cb4-490"><a href="#cb4-490" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-50"</span>,</span>
+<span id="cb4-491"><a href="#cb4-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-492"><a href="#cb4-492" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2025-12-12"</span>, <span class="dv">2025</span>, <span class="st">"hearing"</span>, <span class="st">"ot_financing_hearing"</span>,</span>
+<span id="cb4-493"><a href="#cb4-493" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн санхүүжилтийн хүүгийн асуудлаарх нотлох баримтыг үргэлжлүүлэн шинжлэв"</span>,</span>
+<span id="cb4-494"><a href="#cb4-494" aria-hidden="true" tabindex="-1"></a>  <span class="st">"УИХ; Хянан шалгах түр хороо"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-495"><a href="#cb4-495" aria-hidden="true" tabindex="-1"></a>  <span class="st">"34 хувийн эзэмшлийн санхүүжилтийн эдийн засгийн үр дагавар"</span>,</span>
+<span id="cb4-496"><a href="#cb4-496" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-50"</span>,</span>
+<span id="cb4-497"><a href="#cb4-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-498"><a href="#cb4-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-499"><a href="#cb4-499" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-500"><a href="#cb4-500" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2026: OT PROTEST / NEW NEGOTIATION</span></span>
+<span id="cb4-501"><a href="#cb4-501" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ============================================================</span></span>
+<span id="cb4-502"><a href="#cb4-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-503"><a href="#cb4-503" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2026-03-10"</span>, <span class="dv">2026</span>, <span class="st">"political_economy"</span>, <span class="st">"ot_renegotiation"</span>,</span>
+<span id="cb4-504"><a href="#cb4-504" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн гэрээний санхүүжилтийн хүү, менежментийн төлбөр зэрэг нөхцөлийг дахин хэлэлцэх шаардлага улс төрийн түвшинд хүчтэй тавигдав"</span>,</span>
+<span id="cb4-505"><a href="#cb4-505" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper; gold"</span>,</span>
+<span id="cb4-506"><a href="#cb4-506" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын талын урт хугацааны эдийн засгийн өгөөжийг нэмэгдүүлэх шинэ хэлэлцээний мөчлөг"</span>,</span>
+<span id="cb4-507"><a href="#cb4-507" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-51"</span>,</span>
+<span id="cb4-508"><a href="#cb4-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-509"><a href="#cb4-509" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2026-06-17"</span>, <span class="dv">2026</span>, <span class="st">"civil_society"</span>, <span class="st">"ot_protest"</span>,</span>
+<span id="cb4-510"><a href="#cb4-510" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн зэсийн экспортын тээвэрлэлтийг эсэргүүцлийн хөдөлгөөн хааж, Монголын хүртэх өгөөжийг нэмэгдүүлэх шаардлага тавив"</span>,</span>
+<span id="cb4-511"><a href="#cb4-511" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Radical Reform Movement; иргэд; Rio Tinto"</span>, <span class="st">"Oyu Tolgoi"</span>, <span class="st">"copper"</span>,</span>
+<span id="cb4-512"><a href="#cb4-512" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Оюу Толгойн гэрээний нийгмийн зөвшөөрөл, баялгийн өгөөжийн улс төрийн маргаан шинэ түвшинд хүрэв"</span>,</span>
+<span id="cb4-513"><a href="#cb4-513" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-52"</span>,</span>
+<span id="cb4-514"><a href="#cb4-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-515"><a href="#cb4-515" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2026-06-17"</span>, <span class="dv">2026</span>, <span class="st">"civil_society"</span>, <span class="st">"mining_nationalism"</span>,</span>
+<span id="cb4-516"><a href="#cb4-516" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн орлогын илүү их хувийг Монгол Улс хүртэх шаардлага бүхий үндэсний хэмжээний эсэргүүцэл дахин хүчтэй болов"</span>,</span>
+<span id="cb4-517"><a href="#cb4-517" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Иргэний хөдөлгөөнүүд; Radical Reform Movement"</span>, <span class="cn">NA</span>, <span class="st">"copper"</span>,</span>
+<span id="cb4-518"><a href="#cb4-518" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Resource nationalism болон mining social licence"</span>,</span>
+<span id="cb4-519"><a href="#cb4-519" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-52"</span>,</span>
+<span id="cb4-520"><a href="#cb4-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-521"><a href="#cb4-521" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2026-01-01"</span>, <span class="dv">2026</span>, <span class="st">"investment"</span>, <span class="st">"uranium"</span>,</span>
+<span id="cb4-522"><a href="#cb4-522" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зөөвч-Овоогийн ураны төслийн хөрөнгө оруулалтын хэрэгжилтийн шинэ үе шатанд шилжих бэлтгэл үргэлжив"</span>,</span>
+<span id="cb4-523"><a href="#cb4-523" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; Orano"</span>, <span class="st">"Zuuvch-Ovoo"</span>, <span class="st">"uranium"</span>,</span>
+<span id="cb4-524"><a href="#cb4-524" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Уул уурхайн хөрөнгө оруулалтыг зэс, нүүрснээс уран болон стратегийн ашигт малтмал руу төрөлжүүлэх"</span>,</span>
+<span id="cb4-525"><a href="#cb4-525" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-53"</span>,</span>
+<span id="cb4-526"><a href="#cb4-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-527"><a href="#cb4-527" aria-hidden="true" tabindex="-1"></a>  <span class="st">"2026-01-01"</span>, <span class="dv">2026</span>, <span class="st">"policy"</span>, <span class="st">"critical_minerals"</span>,</span>
+<span id="cb4-528"><a href="#cb4-528" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Зэс, уран болон стратегийн ашигт малтмалын хөрөнгө оруулалтыг нэмэгдүүлэх бодлого эрчимжив"</span>,</span>
+<span id="cb4-529"><a href="#cb4-529" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын Засгийн газар; УИХ; гадаадын хөрөнгө оруулагчид"</span>, <span class="cn">NA</span>, <span class="st">"copper; uranium; critical minerals"</span>,</span>
+<span id="cb4-530"><a href="#cb4-530" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Монголын уул уурхайн дараагийн өсөлтийн мөчлөгийн бодлогын чиглэл"</span>,</span>
+<span id="cb4-531"><a href="#cb4-531" aria-hidden="true" tabindex="-1"></a>  <span class="st">"SRC-54"</span></span>
+<span id="cb4-532"><a href="#cb4-532" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-533"><a href="#cb4-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-534"><a href="#cb4-534" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-535"><a href="#cb4-535" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
+<span id="cb4-536"><a href="#cb4-536" aria-hidden="true" tabindex="-1"></a><span class="co"># Үндсэн ангиллууд</span></span>
+<span id="cb4-537"><a href="#cb4-537" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>mining_timeline %&gt;% filter(category==“company”)</p>
+<p>mining_timeline_detail %&gt;% mutate(type==“policy”)</p>
 
 
 

@@ -7,3 +7,26 @@ format:
 ---
 
 ## Удахгүй шинэчлэгдэнэ!
+
+```{r}
+
+library(tidyverse)
+library(readxl)
+
+ghg_emissions_data <- readRDS("data/data_topics/ghg_emissions.rds") %>% 
+  pivot_longer(-c(item,group),
+               names_to = "year") %>% 
+  mutate(year=as.numeric(year))
+
+ghg_emissions_data %>% 
+  filter(str_detect(item,"^Хүлэмжийн хийн ялгарал")) %>% 
+  filter(str_detect(group,"^Хөдөө|^Эрчим")) %>% 
+  filter(str_detect(item,"ялгарал, мян,тн CO2-экв")) %>% 
+  ggplot(aes(x=year,y=value,group=group,color=group))+
+  geom_line()+
+  theme_minimal()+
+  theme(
+    legend.position = c(.3,.7)
+  )
+```
+
