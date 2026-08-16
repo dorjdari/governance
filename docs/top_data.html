@@ -43,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-3512cbed9e2527d986e9b0b56d261405.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8d0d065ec0ef76c73628d46de33326f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-90709e563a839bcedcd1353ce2db219d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -80,6 +80,22 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-7Y3C1KYLKS', { 'anonymize_ip': true});
 </script>
+<script src="site_libs/core-js-2.5.3/shim.min.js"></script>
+
+<script src="site_libs/react-18.2.0/react.min.js"></script>
+
+<script src="site_libs/react-18.2.0/react-dom.min.js"></script>
+
+<script src="site_libs/reactwidget-2.0.0/react-tools.js"></script>
+
+<link href="site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="site_libs/reactable-0.4.5/reactable.css" rel="stylesheet">
+
+<script src="site_libs/reactable-binding-0.4.5/reactable.js"></script>
+
 
 
 </head>
@@ -92,7 +108,7 @@ gtag('config', 'G-7Y3C1KYLKS', { 'anonymize_ip': true});
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Alpha → Zero</span>
+    <span class="navbar-title"><span class="logo-alpha">Alpha</span> <span class="logo-arrow">→</span> <span class="logo-zero">Zero</span></span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -141,6 +157,7 @@ gtag('config', 'G-7Y3C1KYLKS', { 'anonymize_ip': true});
   <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto">Quarto</a></li>
   <li><a href="#эксел" id="toc-эксел" class="nav-link" data-scroll-target="#эксел">Эксел</a></li>
   </ul></li>
+  <li><a href="#голлон-хэрэглэдэг-багцууд" id="toc-голлон-хэрэглэдэг-багцууд" class="nav-link" data-scroll-target="#голлон-хэрэглэдэг-багцууд">Голлон хэрэглэдэг багцууд</a></li>
   </ul>
 </nav>
     </div>
@@ -200,9 +217,18 @@ gtag('config', 'G-7Y3C1KYLKS', { 'anonymize_ip': true});
 <section id="эксел" class="level3">
 <h3 class="anchored" data-anchor-id="эксел">Эксел</h3>
 <p>Эксел дээр ажиллаж үзээгүй хүн гэж үгүй биз. Байнга шинэчлэгдэж байдаг тул өгөгдөлтэй ажиллах, хүснэгтэн мэдээлэлтэй ажиллахад улам бүр боловсронгуй болж байгаа. Нэг удаагийн жижиг тооцоолол хийхээс эхлээд санхүүгийн загвар зэргийг хийхэд нэн тохиромжтой.</p>
-
-
 </section>
+</section>
+<section id="голлон-хэрэглэдэг-багцууд" class="level2">
+<h2 class="anchored" data-anchor-id="голлон-хэрэглэдэг-багцууд">Голлон хэрэглэдэг багцууд</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-df0bbf82650f15112fea" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-df0bbf82650f15112fea">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Багц":["tidyverse","dplyr","tidyr","tibble","stringr","lubridate","purrr","ggplot2","scales","ggrepel","ggforce","ggalluvial","ggraph","igraph","tidygraph","visNetwork","plotly","gt","gtExtras","janitor","readxl","readr","writexl","jsonlite","rvest","xml2","knitr","kableExtra"],"Үндсэн хэрэглээ":["Өгөгдөл боловсруулах, цэвэрлэх болон дүрслэх багцуудын цогц","Өгөгдөл шүүх, өөрчлөх, бүлэглэх, нэгтгэх, холбох","Өгөгдлийн бүтцийг өөрчлөх, урт/өргөн хэлбэрт хөрвүүлэх","Tidy өгөгдөлд зориулсан хүснэгтэн өгөгдлийн бүтэц","Текст болон тэмдэгт мөр боловсруулах","Огноо, цагийн өгөгдөл боловсруулах","Жагсаалт болон давтагдах үйлдлийг функциональ аргаар боловсруулах","Өгөгдлийн график, диаграмм үүсгэх","График болон хүснэгтийн тоон утгыг форматлах","График дээр давхцахгүй текстийн тайлбар байрлуулах","ggplot2-д нэмэлт геометр болон дүрслэлийн боломж нэмэх","Урсгал, шилжилт болон ангиллын өөрчлөлтийг alluvial графикаар дүрслэх","Сүлжээ болон граф бүтэц дүрслэх","Сүлжээ, зангилаа, холбоос бүхий граф өгөгдөл боловсруулах","igraph төрлийн сүлжээний өгөгдлийг tidyverse хэлбэрээр боловсруулах","Интерактив сүлжээ, stakeholder болон policy график үүсгэх","Интерактив график үүсгэх","Мэргэжлийн, тайланд ашиглах хүснэгт үүсгэх","gt хүснэгтийг sparkline, bar, icon зэрэг нэмэлт дүрслэлээр баяжуулах","Баганын нэр болон өгөгдлийг цэвэрлэх, шалгах","Excel файлыг R-д унших","CSV болон текстэн өгөгдөл унших, бичих","Excel файл үүсгэж хадгалах","JSON өгөгдөл унших, задлах болон үүсгэх","HTML веб хуудсаас өгөгдөл татаж, задлах","XML/HTML бүтэц боловсруулах","Quarto/R Markdown баримтад R код, хүснэгт, график оруулах","HTML/LaTeX хүснэгтийг нэмэлтээр форматлах"]},"columns":[{"id":"Багц","name":"Багц","type":"character","minWidth":120,"maxWidth":160},{"id":"Үндсэн хэрэглээ","name":"Үндсэн хэрэглээ","type":"character","minWidth":400}],"filterable":true,"searchable":true,"defaultPageSize":15,"showPageSizeOptions":true,"pageSizeOptions":[10,15,25,50],"highlight":true,"striped":true,"language":{"searchPlaceholder":"Хайх...","noData":"Өгөгдөл байхгүй","pageNext":"Дараах","pagePrevious":"Өмнөх","pageInfo":"{rowStart}–{rowEnd} / {rows} мөр","pageSizeOptions":"Харуулах {rows} мөр","pageSizeOptionsLabel":"Нэг хуудсанд харуулах мөрийн тоо"},"dataKey":"823b78e46409e38c03751ed0f066b6e2"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
