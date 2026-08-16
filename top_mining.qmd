@@ -4,6 +4,10 @@ format:
   html: 
     warning: false
     echo: false
+    crossref:
+      fig-title: "Зураг"
+      tbl-title: "Хүснэгт"
+      sec-prefix: "Хэсэг"
 ---
 
 coming soon
