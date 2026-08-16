@@ -1,12 +1,16 @@
 ---
 title: "Уул уурхайн засаглал"
-format: html
+format: 
+  html: 
+    warning: false
+    echo: false
 ---
 
 coming soon
 
 ```{r}
 library(tidyverse)
+library(reactable)
 
 mining_timeline <- tribble(
   ~year, ~category, ~event, ~actors, ~commodity, ~significance,
@@ -387,6 +391,7 @@ mining_timeline <- tribble(
   "Монголын уул уурхайн бодлого нүүрснээс зэс, уран, critical minerals руу төрөлжих чиглэлд шилжих боломж"
 )
 ```
+
 ```{r}
 
 mining_timeline_detail <- tribble(
@@ -929,9 +934,146 @@ mining_timeline_detail <- tribble(
 
 ```
 
-mining_timeline %>% 
-filter(category=="company")
+```{r}
+#| label: tbl-timeline
+#| tbl-cap: Үйл явдлын хураангуй
 
-mining_timeline_detail %>% 
-mutate(type=="policy")
+reactable(
+  mining_timeline,
+  searchable = TRUE,
+  filterable = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  bordered = FALSE,
+  pagination = TRUE,
+  defaultPageSize = 15,
+  showPageSizeOptions = TRUE,
+  pageSizeOptions = c(10, 15, 25, 50),
+
+  language = reactableLang(
+    searchPlaceholder = "Хайх...",
+    noData = "Өгөгдөл байхгүй",
+    pageInfo = "{rowStart}–{rowEnd} / {rows} мөр",
+    pagePrevious = "Өмнөх",
+    pageNext = "Дараах",
+    pageSizeOptions = "Харуулах {rows} мөр"
+  ),
+
+  columns = list(
+
+    year = colDef(
+      name = "Он",
+      width = 70,
+      align = "center"
+    ),
+
+    category = colDef(
+      name = "Ангилал",
+      width = 150
+    ),
+
+    event = colDef(
+      name = "Үйл явдал",
+      minWidth = 300
+    ),
+
+    actors = colDef(
+      name = "Оролцогч талууд",
+      minWidth = 220
+    ),
+
+    commodity = colDef(
+      name = "Бүтээгдэхүүн",
+      width = 140
+    ),
+
+    significance = colDef(
+      name = "Ач холбогдол",
+      minWidth = 350
+    )
+  )
+)
+```
+
+```{r}
+#| label: tbl-timelineDetail
+#| tbl-cap: Үйл явдлын дэлгэрэнгүй
+
+reactable(
+  mining_timeline_detail,
+  searchable = TRUE,
+  filterable = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  bordered = FALSE,
+  pagination = TRUE,
+  defaultPageSize = 15,
+  showPageSizeOptions = TRUE,
+  pageSizeOptions = c(10, 15, 25, 50),
+
+  language = reactableLang(
+    searchPlaceholder = "Хайх...",
+    noData = "Өгөгдөл байхгүй",
+    pageInfo = "{rowStart}–{rowEnd} / {rows} мөр",
+    pagePrevious = "Өмнөх",
+    pageNext = "Дараах",
+    pageSizeOptions = "Харуулах {rows} мөр"
+  ),
+
+  columns = list(
+
+    date = colDef(
+      name = "Огноо",
+      width = 100
+    ),
+
+    year = colDef(
+      name = "Он",
+      width = 65,
+      align = "center"
+    ),
+
+    type = colDef(
+      name = "Төрөл",
+      width = 130
+    ),
+
+    subtype = colDef(
+      name = "Дэд төрөл",
+      width = 150
+    ),
+
+    event = colDef(
+      name = "Үйл явдал",
+      minWidth = 300
+    ),
+
+    actors = colDef(
+      name = "Оролцогч талууд",
+      minWidth = 220
+    ),
+
+    project_company = colDef(
+      name = "Төсөл / компани",
+      minWidth = 180
+    ),
+
+    commodity = colDef(
+      name = "Бүтээгдэхүүн",
+      width = 130
+    ),
+
+    governance_relevance = colDef(
+      name = "Засаглалын ач холбогдол",
+      minWidth = 350
+    ),
+
+    source_id = colDef(
+      name = "Эх сурвалж",
+      width = 100
+    )
+  )
+)
+
+```
 
