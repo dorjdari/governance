@@ -1000,84 +1000,82 @@ reactable(
 ```
 
 ```{r}
-#| label: tbl-timelineDetail
-#| tbl-cap: Үйл явдлын дэлгэрэнгүй
-
-reactable(
-  mining_timeline_detail,
-  searchable = TRUE,
-  filterable = TRUE,
-  striped = TRUE,
-  highlight = TRUE,
-  bordered = FALSE,
-  pagination = TRUE,
-  defaultPageSize = 15,
-  showPageSizeOptions = TRUE,
-  pageSizeOptions = c(10, 15, 25, 50),
-
-  language = reactableLang(
-    searchPlaceholder = "Хайх...",
-    noData = "Өгөгдөл байхгүй",
-    pageInfo = "{rowStart}–{rowEnd} / {rows} мөр",
-    pagePrevious = "Өмнөх",
-    pageNext = "Дараах",
-    pageSizeOptions = "Харуулах {rows} мөр"
-  ),
-
-  columns = list(
-
-    date = colDef(
-      name = "Огноо",
-      width = 100
-    ),
-
-    year = colDef(
-      name = "Он",
-      width = 65,
-      align = "center"
-    ),
-
-    type = colDef(
-      name = "Төрөл",
-      width = 130
-    ),
-
-    subtype = colDef(
-      name = "Дэд төрөл",
-      width = 150
-    ),
-
-    event = colDef(
-      name = "Үйл явдал",
-      minWidth = 300
-    ),
-
-    actors = colDef(
-      name = "Оролцогч талууд",
-      minWidth = 220
-    ),
-
-    project_company = colDef(
-      name = "Төсөл / компани",
-      minWidth = 180
-    ),
-
-    commodity = colDef(
-      name = "Бүтээгдэхүүн",
-      width = 130
-    ),
-
-    governance_relevance = colDef(
-      name = "Засаглалын ач холбогдол",
-      minWidth = 350
-    ),
-
-    source_id = colDef(
-      name = "Эх сурвалж",
-      width = 100
-    )
-  )
-)
+#  mining_timeline_detail %>% 
+#  select(year,event,governance_relevance) %>% 
+#  reactable(
+#  searchable = TRUE,
+#  filterable = TRUE,
+#  striped = TRUE,
+#  highlight = TRUE,
+#  bordered = FALSE,
+#  pagination = TRUE,
+#  defaultPageSize = 15,
+#  showPageSizeOptions = TRUE,
+#  pageSizeOptions = c(10, 15, 25, 50),
+#
+#  language = reactableLang(
+#    searchPlaceholder = "Хайх...",
+#    noData = "Өгөгдөл байхгүй",
+#    pageInfo = "{rowStart}–{rowEnd} / {rows} мөр",
+#    pagePrevious = "Өмнөх",
+#    pageNext = "Дараах",
+#    pageSizeOptions = "Харуулах {rows} мөр"
+#  ),
+#
+#  columns = list(
+#
+#  #  date = colDef(
+#  #    name = "Огноо",
+#  #    width = 100
+#  #  ),
+#
+#    year = colDef(
+#      name = "Он",
+#      width = 65,
+#      align = "center"
+#    ),
+#
+#  #  type = colDef(
+#  #    name = "Төрөл",
+#  #    width = 130
+#  #  ),
+##
+#  #  subtype = colDef(
+#  #    name = "Дэд төрөл",
+#  #    width = 150
+#  #  ),
+#
+#    event = colDef(
+#      name = "Үйл явдал",
+#      minWidth = 300
+#    ),
+#
+#  #  actors = colDef(
+#  #    name = "Оролцогч талууд",
+#  #    minWidth = 220
+#  #  ),
+##
+#  #  project_company = colDef(
+#  #    name = "Төсөл / компани",
+#  #    minWidth = 180
+#  #  ),
+##
+#  #  commodity = colDef(
+#  #    name = "Бүтээгдэхүүн",
+#  #    width = 130
+#  #  ),
+#
+#    governance_relevance = colDef(
+#      name = "Засаглалын ач холбогдол",
+#      minWidth = 350
+#    )
+#
+#  #  source_id = colDef(
+#  #    name = "Эх сурвалж",
+#  #    width = 100
+#  #  )
+#  )
+#)
 
 ```
 
