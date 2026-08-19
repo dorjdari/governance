@@ -939,11 +939,10 @@ mining_timeline_detail <- tribble(
 ```
 
 ```{r}
-#| label: tbl-timeline
-#| tbl-cap: Үйл явдлын хураангуй
 
-reactable(
-  mining_timeline,
+mining_timeline %>% 
+  select(year,event,significance) %>% 
+  reactable(
   searchable = TRUE,
   filterable = TRUE,
   striped = TRUE,
@@ -971,25 +970,25 @@ reactable(
       align = "center"
     ),
 
-    category = colDef(
-      name = "Ангилал",
-      width = 150
-    ),
+ #   category = colDef(
+ #     name = "Ангилал",
+ #     width = 150
+ #   ),
 
     event = colDef(
       name = "Үйл явдал",
       minWidth = 300
     ),
 
-    actors = colDef(
-      name = "Оролцогч талууд",
-      minWidth = 220
-    ),
-
-    commodity = colDef(
-      name = "Бүтээгдэхүүн",
-      width = 140
-    ),
+  #  actors = colDef(
+  #    name = "Оролцогч талууд",
+  #    minWidth = 220
+  #  ),
+#
+  #  commodity = colDef(
+  #    name = "Бүтээгдэхүүн",
+  #    width = 140
+  #  ),
 
     significance = colDef(
       name = "Ач холбогдол",
