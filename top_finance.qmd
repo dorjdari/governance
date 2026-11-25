@@ -113,16 +113,16 @@ p <- growth_rate %>%
     aes(
       tooltip = case_when(
         year==2011 ~ paste0(
-        "Өсөлт:<br>", sprintf("%.1f%%", value),"<span style='color: #F36F4F; font-weight: bold;'><br>Оюу Толгойн барилга</span>"
+        "Өөрчлөлт:<br>", sprintf("%.1f%%", value),"<span style='color: #F36F4F; font-weight: bold;'><br>Оюу Толгойн барилга</span>"
       ),
         year==2020 ~ paste0(
-        "Өсөлт:<br>", sprintf("%.1f%%", value),"<span style='color: #F36F4F; font-weight: bold;'><br>Ковид-19</span>"
+        "Өөрчлөлт:<br>", sprintf("%.1f%%", value),"<span style='color: #F36F4F; font-weight: bold;'><br>Ковид-19</span>"
       ),
         year%in%c(1991:1993) ~ paste0(
-        "Өсөлт:<br>", sprintf("%.1f%%", value),"<span style='color: #F36F4F; font-weight: bold;'><br>Шилжилт</span>"
+        "Өөрчлөлт:<br>", sprintf("%.1f%%", value),"<span style='color: #F36F4F; font-weight: bold;'><br>Шилжилт</span>"
       ),
       TRUE ~  paste0(
-        "Өсөлт:<br>", sprintf("%.1f%%", value)
+        "Өөрчлөлт:<br>", sprintf("%.1f%%", value)
       )),
       data_id = year
     ),
