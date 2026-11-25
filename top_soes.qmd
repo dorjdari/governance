@@ -1,11 +1,13 @@
 ---
----
 title: "Төрийн өмчит компани"
 format: 
   html:
     warning: false
     echo: false
+theme: subpages.scss
 ---
+
+![](images/em_logo_new.png)
 
 ## Удахгүй шинэчлэгдэнэ!
 

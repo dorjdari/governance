@@ -4,6 +4,7 @@ format:
   html:
     warning: false
     echo: false
+    theme: subpages.scss
 ---
 
 ## Эдийн засгийн өсөлт: Шилжилтийн уналтаас уул уурхайн хөгжил
