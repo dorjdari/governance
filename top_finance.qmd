@@ -1,12 +1,12 @@
 ---
-title: "top_finance"
+title: "Эдийн засгийн гол үзүүлэлтүүд"
 format: 
   html:
     warning: false
     echo: false
 ---
 
-## Монгол Улсын эдийн засгийн гол үзүүлэлтүүд
+## Эдийн засгийн өсөлт: Шилжилтийн уналтаас уул уурхайн хөгжил
 
 ```{r}
 library(readxl)
@@ -20,7 +20,7 @@ library(ggiraph)
 ```{r}
 #rds files are based on "data/data_topics/gdp_data.xlsx",skip = 1)
 
-df <- read_excel(
+gdp_data <- read_excel(
   "data/data_topics/gdp_data.xlsx",
   skip = 1
 ) %>%
@@ -66,22 +66,22 @@ sector_dict <- c(
 )
 
 # Create one RDS file per indicator-sector combination
-for (i in seq_len(nrow(df))) {
+for (i in seq_len(nrow(gdp_data))) {
 
-  indicator <- item_dict[df$item[i]]
-  sector <- sector_dict[df$sector[i]]
+  indicator <- item_dict[gdp_data$item[i]]
+  sector <- sector_dict[gdp_data$sector[i]]
 
   if (is.na(indicator))
-    stop("Unknown indicator: ", df$item[i])
+    stop("Unknown indicator: ", gdp_data$item[i])
 
   if (is.na(sector))
-    stop("Unknown sector: ", df$sector[i])
+    stop("Unknown sector: ", gdp_data$sector[i])
 
   out <- tibble(
     indicator = indicator,
     sector = sector,
-    year = as.integer(names(df)[3:ncol(df)]),
-    value = as.numeric(unlist(df[i, 3:ncol(df)]))
+    year = as.integer(names(gdp_data)[3:ncol(gdp_data)]),
+    value = as.numeric(unlist(gdp_data[i, 3:ncol(gdp_data)]))
   )
 
   saveRDS(
@@ -111,9 +111,19 @@ p <- growth_rate %>%
 ) +
   geom_col_interactive(
     aes(
-      tooltip = paste0(
-        "Өсөлт:<br>", sprintf("%.1f%%", value)
+      tooltip = case_when(
+        year==2011 ~ paste0(
+        "Өсөлт:<br>", sprintf("%.1f%%", value),"<span style='color: #F36F4F; font-weight: bold;'><br>Оюу Толгойн барилга</span>"
       ),
+        year==2020 ~ paste0(
+        "Өсөлт:<br>", sprintf("%.1f%%", value),"<span style='color: #F36F4F; font-weight: bold;'><br>Ковид-19</span>"
+      ),
+        year%in%c(1991:1993) ~ paste0(
+        "Өсөлт:<br>", sprintf("%.1f%%", value),"<span style='color: #F36F4F; font-weight: bold;'><br>Шилжилт</span>"
+      ),
+      TRUE ~  paste0(
+        "Өсөлт:<br>", sprintf("%.1f%%", value)
+      )),
       data_id = year
     ),
     fill = "#005BAA"
@@ -125,7 +135,8 @@ p <- growth_rate %>%
   scale_y_continuous(breaks=seq(-10,20,by=4))+
   scale_x_continuous(breaks=seq(1990,2025,by=5))+
   theme_minimal(base_size = 14)+
-  theme(panel.grid.minor = element_blank())
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.y=element_blank())
 
 girafe(
     ggobj = p,
