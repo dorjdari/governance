@@ -221,23 +221,23 @@ window.Quarto = {
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Order By</option>
-      <option value="index" data-direction="asc">Default</option>
+    <select id="listing-listing-sort" class="form-select" aria-label="Эрэмбэлэх" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+      <option value="" disabled="" selected="" hidden="">Эрэмбэлэх</option>
+      <option value="index" data-direction="asc">Үндсэн</option>
       <option value="listing-title" data-direction="asc">
         Title
       </option>
       <option value="listing-date-sort" data-direction="asc">
-        Date - Oldest
+        Date - Хуучнаас шинэ
       </option>
       <option value="listing-date-sort" data-direction="desc">
-        Date - Newest
+        Date - Шинээс хуучин
       </option>
     </select>
   </div>
     <div class="input-group input-group-sm quarto-listing-filter">
       <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
+      <input type="text" class="search form-control" placeholder="Хайх">
     </div>
 </div>
 <div class="list quarto-listing-default">
@@ -500,7 +500,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div class="listing-no-matching d-none">No matching items</div>
+<div class="listing-no-matching d-none">Илэрц олдсонгүй</div>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
