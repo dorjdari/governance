@@ -31,4 +31,10 @@ language:
   title-block-category: "Ангилал"
   listing-page-category-all: "Бүгд"
   toc-title-website: "Энэ хэсэгт:"
+  listing-page-order-by: "Эрэмбэлэх"
+  listing-page-order-by-default: "Үндсэн"
+  listing-page-order-by-date-asc: "Хуучнаас шинэ"
+  listing-page-order-by-date-desc: "Шинээс хуучин"
+  listing-page-filter: "Хайх"
+  listing-page-no-matches: "Илэрц олдсонгүй"
   

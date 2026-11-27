@@ -14,6 +14,8 @@ library(readxl)
 library(tidyverse)
 library(fs)
 library(ggiraph)
+library(scales)
+library(ggtext)
 
 ```
 
@@ -29,7 +31,9 @@ gdp_data <- read_excel(
     item = 1,
     sector = 2
   )
+```
 
+```{r}
 # Indicator dictionary
 item_dict <- c(
   "ДНБ, оны үнээр" = "gdp_current",
@@ -65,7 +69,9 @@ sector_dict <- c(
   "Үйлчилгээний бусад үйл ажиллагаа" = "other_services",
   "Бүтээгдэхүүний цэвэр татвар" = "net_taxes"
 )
+```
 
+```{r}
 # Create one RDS file per indicator-sector combination
 for (i in seq_len(nrow(gdp_data))) {
 
@@ -131,14 +137,22 @@ p <- growth_rate %>%
   ) +
   labs(
     x = NULL,
-    y = "Хувь"
+    y = "Хувь",
+    subtitle = paste0("Дундаж өсөлт ", "<span style='color: #F36F4F;'>",comma(mean(growth_rate$value),accuracy=.1),"</span> хувь байв")
   ) +
   scale_y_continuous(breaks=seq(-10,20,by=4))+
   scale_x_continuous(breaks=seq(1990,2025,by=5))+
   theme_minimal(base_size = 14)+
   theme(panel.grid.minor = element_blank(),
-        panel.grid.major.y=element_blank())
+        panel.grid.major.y=element_blank(),
+        plot.title.position = "plot",
+        plot.subtitle = element_markdown())
 
+p
+```
+
+
+```{r}
 girafe(
     ggobj = p,
     width_svg = 8,
@@ -173,3 +187,4 @@ girafe(
 
 ```
 
+## Төсөв ба ДНБ
