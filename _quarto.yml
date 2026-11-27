@@ -34,6 +34,7 @@ language:
   listing-page-order-by: "Эрэмбэлэх"
   listing-page-order-by-default: "Үндсэн"
   listing-page-field-date: "Огноо"
+  listing-page-field-title: "Сэдэв"
   listing-page-order-by-date-asc: "Хуучнаас шинэ"
   listing-page-order-by-date-desc: "Шинээс хуучин"
   listing-page-filter: "Хайх"
