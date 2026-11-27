@@ -33,6 +33,7 @@ language:
   toc-title-website: "Энэ хэсэгт:"
   listing-page-order-by: "Эрэмбэлэх"
   listing-page-order-by-default: "Үндсэн"
+  listing-page-field-date: "Огноо"
   listing-page-order-by-date-asc: "Хуучнаас шинэ"
   listing-page-order-by-date-desc: "Шинээс хуучин"
   listing-page-filter: "Хайх"
